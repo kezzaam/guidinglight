@@ -6,10 +6,15 @@
 
 ##### This project aims to create an educational, interactive resource for NZ naked eye stars with a focus on Maori astronomy and mythology.
 
-###### [1. Objectives](#objectives)
-###### [2. Technology](#technology)
-###### [3. Timeframe](#timeframe)
-###### [4. User flow](#user-flow)
+###### [1. Background](#background)
+###### [2. Objectives](#objectives)
+###### [3. Technology](#technology)
+###### [4. Timeframe](#timeframe)
+###### [5. User flow](#user-flow)
+
+#### [Background]:
+
+There are many excellent night sky apps available, but none with much information around Maori astronomy. While creating a comprehensive night sky app such as Stellarium is not realistic for the given timeframe, the scope will be narrowed by focusing only on naked eye celestial bodies visible from the southern hemisphere. 
 
 #### [Objectives]:
 

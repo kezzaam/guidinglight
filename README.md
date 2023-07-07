@@ -90,7 +90,7 @@ flowchart TB
     I --> J(Discoveries)
     I --> K(Settings)
     I --> L(Modes)
-    I --> M(Account)
+    I --> M(Account) -->N(Logout) -->O[End]
 
   
 ```

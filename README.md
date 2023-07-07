@@ -6,7 +6,12 @@
 
 ##### This project aims to create an educational, interactive resource for NZ naked eye stars with a focus on Maori astronomy and mythology.
 
-#### Objectives:
+###### [1. Objectives](#objectives)
+###### [2. Technology](#technology)
+###### [3. Timeframe](#timeframe)
+###### [4. User flow](#user-flow)
+
+#### [Objectives]:
 
 1. Star and planet catalogue with Maori names and myths
 2. Interactivity for users - zooming, panning, search, filter, favourites
@@ -17,7 +22,7 @@
 8. AR mode with star position in real-time/ match phone position
 9. Night mode
 
-#### Technology:
+#### [Technology]:
 
 ```mermaid
 flowchart TB
@@ -35,7 +40,7 @@ flowchart TB
 ```
 ###### *may also look into HeadlessUI or MaterialUI for styling
 
-#### Timeframe:
+#### [Timeframe]:
 
 ```mermaid
 gantt
@@ -71,7 +76,7 @@ gantt
         Presentation                 :crit, milestone, 2023-07-26, 0d
 ```
 
-#### User Flow:
+#### [User Flow]:
 
 ```mermaid
 flowchart TB

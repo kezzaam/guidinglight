@@ -1,7 +1,7 @@
 ###### **Capstone Project** - Institute of Data Software Engineering Bootcamp
 
 
-# **Guiding Star**
+# **Guiding Light**
 ### Aotearoa Night Sky Discovery App
 
 ##### This project aims to create an educational, interactive resource for NZ naked eye stars with a focus on Maori astronomy and mythology.
@@ -44,6 +44,15 @@ flowchart TB
     end
 ```
 ###### *may also look into HeadlessUI or MaterialUI for styling
+
+
+#### Out of scope tech / questions:
+* Data: 3rd party Astronomy APIs
+* 3D graphics: ThreeJS, OpenGL, WebGL
+* Visualisation: D3js (d3-celestial)
+* Real-Time Data & Simulation: Celestial (JavaScript) for astronomical calculations and algorithms
+* AR Frameworks: Most likely won't have the time to implement feature
+
 
 #### [Timeframe]:
 

@@ -33,7 +33,7 @@ There are many excellent night sky apps available, but none with much informatio
 flowchart TB
     subgraph Backend
     id0[/Server\]-->NextJS
-    id1[(Database)]-->MySQL
+    id1[(Database)]-->MongoDB---PrismaORM
     id3[Data Fetching]-->SWL
     id4[Auth]-->NextAuth
     end
@@ -108,3 +108,4 @@ flowchart TB
 
   
 ```
+

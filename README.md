@@ -47,11 +47,11 @@ flowchart TB
 
 
 #### Out of scope tech / questions:
-* Data: 3rd party Astronomy APIs
+* Data: 3rd party Astronomy APIs - Bright Star Catalog for naked eye stars
 * 3D graphics: ThreeJS, OpenGL, WebGL
 * Visualisation: D3js (d3-celestial)
 * Real-Time Data & Simulation: Celestial (JavaScript) for astronomical calculations and algorithms
-* AR Frameworks: Most likely won't have the time to implement feature
+* AR Frameworks: Most likely won't have the time to implement this feature
 
 
 #### [Timeframe]:
@@ -73,8 +73,8 @@ gantt
     section Build & Test
         Backend                      :active, c1, after b1, 5d
             Server                   :after b1, 1d
-            Database                 :1d
-            API integration          :2d
+            API integration          :1d
+            Database                 :2d
             CRUD                     :1d
         Frontend                     :active, d1, after c1, 7d
             Core UI                  :crit, 2023-07-16, 36h

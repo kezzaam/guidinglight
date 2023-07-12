@@ -1,4 +1,4 @@
-// fix for hot reload / prevent heaps of clients being created
+// fix for hot reloading / prevent heaps of clients being created
 
 import { PrismaClient } from "@prisma/client"
 
@@ -14,5 +14,6 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient({
 
 // Set the PrismaClient instance to the global variable when not in production
 if (process.env.NODE_ENV !== "production") {
+  //instantiate a singleton
   globalForPrisma.prisma = prisma
 }

@@ -2,13 +2,13 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches, Chivo } from 'next/font/google'
 
-const staatliches = Staatliches({
+export const staatliches = Staatliches({
   weight: '400',
   subsets: ['latin'],
   variable: '--staatliches',
 })
 
-const chivo = Chivo({
+export const chivo = Chivo({
   weight: ['300', '400', '500', '600'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
@@ -28,7 +28,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
-      <body className={staatliches.className}>{children}</body>
+      <body>
+        <main className={staatliches.className}>
+          {children}
+        </main>
+      </body>
     </html>
   )
 }

@@ -1,6 +1,7 @@
 export async function GET(request: Request) {
     return new Response(JSON.stringify({
-        "name": "Binance Smart Chain",
+        // something in here to return
+        'This is a test route:': 'constellations/test/route.ts'
    }))
 }
 

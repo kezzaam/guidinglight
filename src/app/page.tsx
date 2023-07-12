@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import { MoonPhase } from 'astronomy-engine'
+import prisma from "../../prisma/prisma"
 
-export default function Home() {
+export default async function Home() {
 // Get the current date and time
 const currentDate = new Date();
 
@@ -10,12 +11,26 @@ const moonPhase = MoonPhase(currentDate);
 
 // Log the result
 console.log('Moon phase:', moonPhase);
+let users = await prisma.user.findMany();
 
   return (
     <div>
       <h1>Guiding Light</h1>
       <p>Aotearoa Night Sky Discovery App</p>
       <p>{moonPhase}</p>
-    </div>
+
+        {users.map((user) => (
+          <div
+            key={user.id}
+          >
+            <h3>{user.name}</h3>
+          </div>
+        ))}
+      </div>
   )
 }
+
+
+
+
+

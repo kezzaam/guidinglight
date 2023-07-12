@@ -1,4 +1,5 @@
-// initialise Prisma client
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -9,13 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// define data models
-// test model below
 model User {
-  id        String   @id @default(uuid()) @map("_id") @db.ObjectId
-  username  String   @unique @map("name")
-  email     String   @unique @map("email")
-  password  String   @map("password")
-  createdAt DateTime @default(now()) @map("createdAt")
-  updatedAt DateTime @updatedAt @map("updatedAt")
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String?
 }
+
+// if changes are made - npx prisma generate to update the prisma client

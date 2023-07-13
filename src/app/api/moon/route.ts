@@ -1,23 +1,22 @@
-import { NextResponse } from 'next/server'
- 
-export async function GET() {
-    const applicationId = process.env.APPLICATION_ID
-    const applicationSecret = process.env.APPLICATION_SECRET
-  
-    const authString = btoa(`${applicationId}:${applicationSecret}`)
-  
-    const URL = 'https://api.astronomyapi.com/api/v2/studio/moon-phase'
-  
-    const res = await fetch(URL, {
-      headers: {
-        'Content-Type': 'application/json',
-        'API-Key': process.env.DATA_API_KEY,
-        'Authorization': `Basic ${authString}`,
-      },
+import maramataka from './maramataka.js'
+
+export async function GET(request: Request) {
+  try {
+    const responseData = maramataka.map((marama) => {
+      const { id, name, goodFor, energy, image, moonphase_id } = marama
+
+      return {
+        id,
+        name,
+        goodFor,
+        energy,
+        image,
+        moonphase_id,
+      }
     })
-  
-    const data = await res.json()
-  
-    return NextResponse.json({ data })
+
+    return new Response(JSON.stringify(responseData))
+  } catch (error) {
+    return new Response(JSON.stringify({ error: (error as Error).message }))
   }
-  
+}

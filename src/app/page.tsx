@@ -1,36 +1,24 @@
-import Image from 'next/image'
-import { MoonPhase } from 'astronomy-engine'
-import prisma from "../../prisma/prisma"
+"use client"
 
-export default async function Home() {
-// Get the current date and time
-const currentDate = new Date();
+import { useState } from 'react';
+import Month from '@/components/Month';
+import CalendarRow from '@/components/CalendarRow';
+import Maramataka from '@/components/Maramataka';
 
-// Calculate the Moon's phase
-const moonPhase = MoonPhase(currentDate);
+export default function Home() {
+  // Use state to manage the selected date
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-// Log the result
-console.log('Moon phase:', moonPhase);
-let users = await prisma.user.findMany();
+  // Function to handle date selection
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <div>
-      <h1>Guiding Light</h1>
-      <p>Aotearoa Night Sky Discovery App</p>
-      <p>{moonPhase}</p>
-
-        {users.map((user) => (
-          <div
-            key={user.id}
-          >
-            <h3>{user.name}</h3>
-          </div>
-        ))}
-      </div>
-  )
+      <Month selectedDate={selectedDate} />
+      <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
+      <Maramataka selectedDate={selectedDate} />
+    </div>
+  );
 }
-
-
-
-
-

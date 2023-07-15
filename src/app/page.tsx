@@ -1,24 +1,26 @@
 "use client"
 
-import { useState } from 'react';
-import Month from '@/components/Month';
-import CalendarRow from '@/components/CalendarRow';
-import Maramataka from '@/components/Maramataka';
+import { useState } from 'react'
+import Month from '@/components/Month'
+import CalendarRow from '@/components/CalendarRow'
+import Maramataka from '@/components/Maramataka'
+import Discoveries from '@/components/Discoveries'
 
 export default function Home() {
   // Use state to manage the selected date
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   // Function to handle date selection
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
-  };
+    setSelectedDate(date)
+  }
 
   return (
     <div>
-      <Month selectedDate={selectedDate} />
+      <Month selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
-      <Maramataka selectedDate={selectedDate} />
+      <Maramataka selectedDate={selectedDate} onDateSelect={handleDateSelect}/>
+      <Discoveries />
     </div>
-  );
+  )
 }

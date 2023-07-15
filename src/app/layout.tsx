@@ -1,3 +1,4 @@
+import Provider from '../components/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches, Chivo } from 'next/font/google'
@@ -29,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
       <body>
+        <Provider>
         <main className={staatliches.className}>
           {children}
         </main>
+        </Provider>
       </body>
     </html>
   )

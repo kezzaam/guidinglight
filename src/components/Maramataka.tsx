@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { MoonPhase } from 'astronomy-engine'
-import maramataka from '@/app/api/moon/maramataka'
+import maramataka from '../data/maramataka'
 
 export default function Maramataka({ selectedDate, onDateSelect }: { selectedDate: Date; onDateSelect: (date: Date) => void }) {
   // Calculate the Moon's phase for the selected date

@@ -1,37 +1,42 @@
-import months from '../app/api/moon/months.json'
+import months from '../data/months.json'
 
-export default function CalendarRow({ selectedDate, onDateSelect }: { selectedDate: Date; onDateSelect: (date: Date) => void }) {
+export default function Month({ selectedDate, onDateSelect }: { selectedDate: Date; onDateSelect: (date: Date) => void }) {
   // Get the current date and time
   const currentDate = new Date()
 
-  // Function to format the date as "Thursday 13th July"
+  // Function to format the date with prefix and ordinal suffix
   function formatDate(date: Date) {
     const options: any = { weekday: 'long', day: 'numeric', month: 'long' }
-    const formattedDate = date.toLocaleDateString('en-GB', options)
+    const formatter = new Intl.DateTimeFormat('en-GB', options)
 
-    // Add the ordinal suffix to the day
-    const day = date.getDate()
-    const suffix = getOrdinalSuffix(day)
-    return formattedDate.replace(`${day}`, `${day}${suffix}`)
-  }
-
-  // Function to get the ordinal suffix for a number (e.g., 1st, 2nd, 3rd)
-  function getOrdinalSuffix(number: number) {
-    if (number === 11 || number === 12 || number === 13) {
-      return 'th'
-    }
-    const lastDigit = number % 10
-    switch (lastDigit) {
-      case 1:
-        return 'st'
-      case 2:
-        return 'nd'
-      case 3:
-        return 'rd'
-      default:
-        return 'th'
+    if (date.toDateString() === currentDate.toDateString()) {
+      return `Today: ${formatter.format(date)}`
+    } else if (date.toDateString() === getPreviousDate().toDateString()) {
+      return `Yesterday: ${formatter.format(date)}`
+    } else if (date.toDateString() === getNextDate().toDateString()) {
+      return `Tomorrow: ${formatter.format(date)}`
+    } else {
+      return `${formatter.format(date)}`
     }
   }
+
+  // Function to get the previous date
+  function getPreviousDate() {
+    const previousDate = new Date(currentDate)
+    previousDate.setDate(previousDate.getDate() - 1)
+    return previousDate
+  }
+
+  // Function to get the next date
+  function getNextDate() {
+    const nextDate = new Date(currentDate)
+    nextDate.setDate(nextDate.getDate() + 1)
+    return nextDate
+  }
+
+    // Format the selected date
+    const formattedDate = formatDate(selectedDate)
+    console.log('Selected date:', formattedDate)
 
   // Function to get the Māori month based on the English month
   function getMaoriMonth(englishMonth: string) {
@@ -39,9 +44,6 @@ export default function CalendarRow({ selectedDate, onDateSelect }: { selectedDa
     return month ? month.maoriName : ''
   }
 
-  // Format the current date
-  const formattedDate = formatDate(currentDate)
-  console.log('Current date:', formattedDate)
 
   // Get the Māori month for the current English month
   const englishMonth = currentDate.toLocaleString('en-GB', { month: 'long' })

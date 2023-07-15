@@ -1,4 +1,4 @@
-import planets from './planets.json';
+import planets from '../../../data/planets.json';
 
 interface PlanetElement {
   a: number;

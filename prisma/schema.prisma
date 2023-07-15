@@ -12,8 +12,31 @@ datasource db {
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
   email     String   @unique
-  name      String?
+  password  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // if changes are made - npx prisma generate to update the prisma client
+// npx prisma db push to update the database
+
+model Star {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  star_id              Int          @unique
+  name                 String
+  maori_name           String?
+  designation          String?
+  asterism             String?
+  constellation        String?
+  maori_constellation  String?
+  magnitude            Float
+  bv_index             Float
+  geometry             Json
+  geometry_type        String
+  geometry_coordinates Float[]
+  description          String?
+}
+
+

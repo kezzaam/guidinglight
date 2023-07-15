@@ -1,14 +1,19 @@
-import { PrismaClient } from '@prisma/client';
+// fix for hot reloading / prevent heaps of clients being created
 
-let prisma: PrismaClient;
+import { PrismaClient } from "@prisma/client"
 
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
-} else {
-  if (!global.prisma) {
-    global.prisma = new PrismaClient();
-  }
-  prisma = global.prisma;
+// Create a global variable to hold the PrismaClient instance
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-export default prisma;
+// Initialize the PrismaClient instance and assign it to the global variable
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: ["query", "info", "warn"],
+})
+
+// Set the PrismaClient instance to the global variable when not in production
+if (process.env.NODE_ENV !== "production") {
+  //instantiate a singleton
+  globalForPrisma.prisma = prisma
+}

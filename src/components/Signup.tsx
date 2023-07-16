@@ -1,53 +1,42 @@
+"use client"
+
 import React, { useState, useEffect, useContext } from 'react'
 import Button from '@/components/Button'
-import Image from 'next/image'
 import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faGithub,
+  faGoogle,
+} from '@fortawesome/free-brands-svg-icons'
+import axios from 'axios'
 
 // Component for user sign-up functionality.
 
 export default function Signup(): JSX.Element {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [authUser, setAuthUser] = useState(null)
-  const [name, setName] = useState('')
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
 
   // Handle create account form submission
-  const handleCreateAccount = () => {}
-
-  // Listen for authentication state changes
-  useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAuthUser(user)
-      } else {
-        setAuthUser(null)
-      }
-    })
-
-    return () => {
-      listen()
-    }
-  }, [])
-
-  // Redirect to goal page if user is authenticated
-  useEffect(() => {
-    if (authUser) {
-      router.push('signup/goal')
-    }
-  }, [authUser, router])
+  const handleCreateAccount = async (e) => {
+    e.preventDefault()
+    axios.post('/api/users', data)
+    .then(() => alert('Account created successfully!'))
+    .catch((err) => alert(err))
+  }
 
   // Handle Google sign-up
   const handleGoogleSignUp = () => {}
 
-  // Handle Twitter sign-up
-  const handleTwitterSignUp = () => {}
+  // Handle Github sign-up
+  const handleGithubSignUp = () => {}
 
-  // Handle Facebook sign-up
-  const handleFacebookSignUp = () => {}
 
   return (
     <main className="flex min-h-screen min-w-screen items-center flex-col solid py-8">
-      <LogoHeader />
+      {/* <LogoHeader /> */}
       <div className="min-h-full flex-col flex items-center justify-center py-8 px-4 sm:px-4 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -67,8 +56,8 @@ export default function Signup(): JSX.Element {
                 required
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-[--pastelindigo] focus:outline-[--pastelgrey] focus:ring-none focus:border-[--englishlavender] focus:z-10 sm:text-sm"
                 placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={data.name}
+                onChange={(e) => setData({...data, name: e.target.value})}
               />
             </div>
 
@@ -82,8 +71,8 @@ export default function Signup(): JSX.Element {
                 required
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-[--pastelindigo] focus:outline-[--pastelgrey] focus:ring-none focus:border-[--englishlavender] focus:z-10 sm:text-sm"
                 placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
               />
             </div>
 
@@ -97,8 +86,8 @@ export default function Signup(): JSX.Element {
                 required
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-[--pastelindigo] focus:outline-[--pastelgrey] focus:ring-none focus:border-[--englishlavender] focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={data.password}
+                onChange={(e) => setData({...data, password: e.target.value})}
               />
             </div>
 
@@ -126,17 +115,13 @@ export default function Signup(): JSX.Element {
 
           <div className="flex space-x-2">
             {/* 3rd party sign-up buttons */}
-            <ButtonReverse onClick={handleGoogleSignUp}>
-              <Image src="/images/icons8-google-48.svg" alt="Google Icon" width={30} height={30} />
-            </ButtonReverse>
+            <Button onClick={handleGoogleSignUp}>
+            <FontAwesomeIcon icon={faGoogle} />
+            </Button>
 
-            <ButtonReverse onClick={handleTwitterSignUp}>
-              <Image src="/images/icons8-twitter-48.svg" alt="Twitter Icon" width={30} height={30} />
-            </ButtonReverse>
-
-            <ButtonReverse onClick={handleFacebookSignUp}>
-              <Image src="/images/icons8-facebook-48.svg" alt="Facebook Icon" width={30} height={30} />
-            </ButtonReverse>
+            <Button onClick={handleGithubSignUp}>
+            <FontAwesomeIcon icon={faGithub} />
+            </Button>
           </div>
 
           <div>

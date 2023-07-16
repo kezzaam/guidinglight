@@ -1,4 +1,4 @@
-import Provider from '../components/Provider'
+import Provider from '../context/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches, Chivo } from 'next/font/google'

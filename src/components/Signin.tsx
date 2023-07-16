@@ -2,23 +2,36 @@
 
 import { useState } from 'react'
 import Button from '@/components/Button'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useSession, signIn, signOut } from 'next-auth/react'
-
-// sign-in functionality
-const handleSignIn = async () => {}
-const handleGoogleSignIn = async () => {}
+import { signIn } from 'next-auth/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faGithub,
+  faGoogle,
+} from '@fortawesome/free-brands-svg-icons'
+import Session from '@/components/Session'
 
 
 export default function Signin(): JSX.Element {
-  const { data: session, status } = useSession()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  })
+
+// sign-in functionality
+const handleSignIn = async (e) => {
+  e.preventDefault()
+  await signIn('credentials', {...data, redirect: false})
+  .then(() => alert('Logged in successfully!'))
+  .catch((err) => alert(err))
+}
+
+const handleGoogleSignIn = async () => {}
+const handleGithubSignIn = async () => {}
 
     return (
         <main className="flex min-h-screen items-center flex-col solid">
+          <Session/>
           {/* <LogoHeader /> */}
           <div className="min-h-full flex-col flex items-center justify-center py-8 px-4 sm:px-4 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -43,8 +56,8 @@ export default function Signin(): JSX.Element {
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-[--pastelindigo] rounded-t-md focus:outline-[--pastelgrey] focus:ring-none focus:border-[--englishlavender] focus:z-10 sm:text-sm"
                     placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={data.email}
+                    onChange={(e) => setData({...data, email: e.target.value})}
                   />
                 </div>
       
@@ -56,12 +69,12 @@ export default function Signin(): JSX.Element {
                     required
                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-[--pastelindigo] rounded-b-md focus:outline-[--pastelgrey] focus:ring-none focus:border-[--englishlavender] focus:z-10 sm:text-sm"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={data.password}
+                    onChange={(e) => setData({...data, password: e.target.value})}
                   />
                 </div>
               </div>
-              {errorMessage && <div className="text-[--pastelgrey]">{errorMessage}</div>}
+              {/* {errorMessage && <div className="text-[--pastelgrey]">{errorMessage}</div>} */}
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -83,13 +96,17 @@ export default function Signin(): JSX.Element {
               </div>
       
               <div className="flex space-x-2">
-                <Button onClick={handleGoogleSignIn}>
-                  <Image src="/icons/icons8-google-48.svg" alt="Google Icon" width={30} height={30} />
-                </Button>
-              </div>
+            {/* 3rd party provider buttons */}
+            <Button onClick={handleGoogleSignIn}>
+            <FontAwesomeIcon icon={faGoogle} />
+            </Button>
+
+            <Button onClick={handleGithubSignIn}>
+            <FontAwesomeIcon icon={faGithub} />
+            </Button>
+          </div>
             </form>
           </div>
-
         </main>
     )
 }

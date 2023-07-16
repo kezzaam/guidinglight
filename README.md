@@ -34,13 +34,14 @@ flowchart TB
     subgraph Backend
     id0[/Server\]-->NextJS
     id1[(Database)]-->MongoDB---PrismaORM
-    id3[Data Fetching]-->SWL
+    id3[Data Handling]-->APIroutes
     id4[Auth]-->NextAuth
     end
     subgraph Frontend
     id2{{Framework}}-->NextJS
     id5{{Language}}-->TypeScript---JavaScript
     id6{{Styling}}---TailwindCSS*
+    id7[Data Fetching]-->SWR
     end
 ```
 ###### *may also look into HeadlessUI or MaterialUI for styling

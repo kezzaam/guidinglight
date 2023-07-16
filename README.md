@@ -41,7 +41,7 @@ flowchart TB
     id2{{Framework}}-->NextJS
     id5{{Language}}-->TypeScript---JavaScript
     id6{{Styling}}---TailwindCSS*
-    id7[Data Fetching]-->Axios
+    id7[Data Fetching]-->SWR
     end
 ```
 ###### *may also look into HeadlessUI or MaterialUI for styling

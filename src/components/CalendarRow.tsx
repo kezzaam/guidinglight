@@ -17,7 +17,7 @@ export default function CalendarRow({ selectedDate, onDateSelect }: { selectedDa
     }
   
     return (
-      <div className="calendar flex flex-row items-center justify-between lg:max-w-[40%]">
+      <div className="calendar flex flex-row items-center justify-between lg:w-[40%]">
         {dates.map((date, index) => (
           <button
             key={index}

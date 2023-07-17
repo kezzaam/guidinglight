@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Month from '@/components/Month'
 import CalendarRow from '@/components/CalendarRow'
 import Maramataka from '@/components/Maramataka'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   // Use state to manage the selected date
@@ -19,6 +20,7 @@ export default function Home() {
       <Month selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <Maramataka selectedDate={selectedDate} onDateSelect={handleDateSelect}/>
+      <Footer />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import maramataka from '../../../data/maramataka.js/index.js'
+import maramataka from '../../../data/maramataka'
 
 export async function GET(request: Request) {
   try {

@@ -27,10 +27,10 @@ export default function RootLayout({
         <Provider>
           <div className="w-screen flex flex-col items-center justify-center space-y-4 p-4">
             <Header />
-            <main className={`content ${staatliches.className}`}>
+            <main className={`w-screen content ${staatliches.className}`}>
               {children}
             </main>
-            <Footer />
+
           </div>
         </Provider>
       </body>

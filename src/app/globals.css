@@ -59,16 +59,15 @@ html {
 body {
   font-size: 10px;
   color: var(--intensewhite);
+  letter-spacing: 1px;
 }
 
 h1 {
   font-size: 4rem;
-  letter-spacing: 0.10rem;
 }
 
 h2 {
   font-size: 3rem;
-  letter-spacing: 0.10rem;
 }
 
 h3 {
@@ -80,9 +79,10 @@ h3 {
 
 h4 {
   font-family: Chivo, sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--bluegrey);
   font-weight: 700;
+  letter-spacing: 0;
 }
 
 p {
@@ -90,6 +90,7 @@ p {
   font-size: 1.2rem;
   line-height: 1.5;
   font-weight: 300;
+  letter-spacing: 0;
 }
 
 .content {
@@ -109,10 +110,11 @@ p {
   max-width: 80%;
 }
 
-.calendar-button {
+button.calendar-button {
   border-right: 3px solid var(--fuzzywuzzy);
   text-align: center;
   width: 14.28%;
+  background: none !important;
 }
 
 .calendar-button:last-child {
@@ -124,15 +126,35 @@ p {
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
-.calendar-button:hover {
-  background-color: var(--bluegrey);
+button.calendar-button:hover {
+  background-color: var(--bluegrey) !important;
   color: var(--cetaceanblue)
 }
 
-/* Target the middle button */
-.calendar-button:nth-child(7n + 4) {
-  background-color: var(--fuzzywuzzy);
+/* middle button */
+button.calendar-button:nth-child(7n + 4) {
+  background-color: var(--fuzzywuzzy) !important;
   color: var(--intensewhite);
+}
+
+button {
+  background: linear-gradient( var(--fawn), var(--quinacridonemagenta) );
+  border: none;
+}
+
+button:hover {
+  background: linear-gradient( var(--darkcornflowerblue), var(--cetaceanblue) );
+  transform: scale(98%);
+  box-shadow: 0 0 0.5rem var(--cetaceanblue);
+}
+
+button.secondary {
+  background: linear-gradient( var(--bluegrey), var(--darkcornflowerblue) );
+
+}
+
+button.secondary:hover {
+  background: linear-gradient( var(--darkcornflowerblue), var(--cetaceanblue) );
 }
 
 button:disabled {
@@ -141,7 +163,7 @@ button:disabled {
 }
 
 button:disabled:hover {
-  background-color: var(--outerspace);
+  background-color: var(--outerspace) !important;
   color: var(--cetaceanblue);
 }
 
@@ -149,4 +171,49 @@ button:disabled:hover {
   background: linear-gradient( #EFA970, #95344F );
   opacity: 100;
   transform: scale(105%);
+}
+
+.current img:hover {
+  transform: scale(100%);
+  opacity: 50%;
+}
+
+.current img {
+  opacity: 50%;
+}
+
+.chivo {
+  font-family: Chivo, sans-serif;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+a {
+  color: var(--fuzzywuzzy);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--deer);
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--bluegrey);
+}
+
+.separator:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: .25em;
 }

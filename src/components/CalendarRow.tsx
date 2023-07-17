@@ -17,12 +17,13 @@ export default function CalendarRow({ selectedDate, onDateSelect }: { selectedDa
     }
   
     return (
-      <div>
+      <div className="calendar flex flex-row items-center justify-between lg:max-w-[40%]">
         {dates.map((date, index) => (
           <button
             key={index}
             disabled={date.getMonth() !== selectedDate.getMonth()}
             onClick={() => onDateSelect(date)}
+            className="calendar-button"
           >
             {formatDay(date)}
           </button>

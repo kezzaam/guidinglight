@@ -30,11 +30,14 @@ export default function Maramataka({ selectedDate, onDateSelect }: { selectedDat
   console.log('Selected phase:', phase);
 
   return (
-    <div>
-      <h3>{phase?.name}</h3>
+    <div className="flex flex-col items-center mx-auto lg:flex-row lg:justify-between lg:mx-[5%]">
+      <h3 className="lg:w-[25%] lg:text-right">{phase?.name}</h3>
       <Image src={phase?.image || ''} alt={phase?.name || ''} width={500} height={500} />
+      <div className="lg:w-[25%] lg:bg-cetaceanblue lg:bg-opacity-80 lg:px-4 lg:rounded-2xl lg:py-10">
       <h4>{phase?.energy} energy</h4>
       <p>{phase?.goodFor}</p>
+      </div>
+
     </div>
   );
 }

@@ -2,19 +2,151 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'chivomedium_italic';
+    src: url('/fonts/chivo-italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'chivomedium';
+    src: url('/fonts/chivo.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+}
+
+
+:root {
+  /* main colours */
+  --cetaceanblue: #111033;
+  --intensewhite: #F8F9FA;
+  --bluegrey: #619DC3;
+  --fuzzywuzzy: #C3616C;
+  --deer: #C38761;
+  /* gradients */
+  --warmgradient: linear-gradient(90deg, #95344F, #EFA970);
+  --coolgradient: linear-gradient(90deg, #34957A, #C3B861);
+  /* gradient colours */
+  --fawn: #EFA970;
+  --quinacridonemagenta: #95344F;
+  --vegasgold: #C3B861;
+  --illuminatingemerald: #34957A;
+  /* extra colours */
+  --darkcornflowerblue: #253C7A;
+  --outerspace: #201F3D;
+  --bone: #DFE0C2;
+  --burleywood: #DAC385;
+  --verylightazure: #70B6EF;
+  --mediumaquamarine: #6ACBB0;
+  --darkpurple: #38203E;
+}
+
+html {
+  background-image: url(/images/nightskydark.jpg);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  background-color: var(--cetaceanblue);
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-y: scroll;
+}
 
 body {
-  font-size: 20px;
+  font-size: 10px;
+  color: var(--intensewhite);
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 4rem;
   letter-spacing: 0.10rem;
-  font-weight: 400;
+}
+
+h2 {
+  font-size: 3rem;
+  letter-spacing: 0.10rem;
+}
+
+h3 {
+  font-family: Chivo, sans-serif;
+  font-size: 1.6rem;
+  color: var(--fuzzywuzzy);
+  font-weight: 700;
+}
+
+h4 {
+  font-family: Chivo, sans-serif;
+  font-size: 0.8rem;
+  color: var(--bluegrey);
+  font-weight: 700;
 }
 
 p {
+  font-family: Chivo, sans-serif;
   font-size: 1.2rem;
   line-height: 1.5;
-  font-weight: 500;
+  font-weight: 300;
+}
+
+.content {
+  position: relative;
+  overflow-y: auto;
+  height: calc(100vh - 180px); /* Adjust the value based on footer height */
+}
+
+.calendar {
+  font-size: 1.6rem;
+  letter-spacing: 0.10rem;
+  color: var(--fuzzywuzzy);
+  border: 3px solid var(--fuzzywuzzy);
+  border-radius: 0.7rem;
+  padding: 0;
+  margin: 0.5rem auto;
+  max-width: 80%;
+}
+
+.calendar-button {
+  border-right: 3px solid var(--fuzzywuzzy);
+  text-align: center;
+  width: 14.28%;
+}
+
+.calendar-button:last-child {
+  border-right: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.calendar-button:first-child {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.calendar-button:hover {
+  background-color: var(--bluegrey);
+  color: var(--cetaceanblue)
+}
+
+/* Target the middle button */
+.calendar-button:nth-child(7n + 4) {
+  background-color: var(--fuzzywuzzy);
+  color: var(--intensewhite);
+}
+
+button:disabled {
+  background-color: var(--outerspace);
+  color: var(--cetaceanblue);
+}
+
+button:disabled:hover {
+  background-color: var(--outerspace);
+  color: var(--cetaceanblue);
+}
+
+.current {
+  background: linear-gradient( #EFA970, #95344F );
+  opacity: 100;
+  transform: scale(105%);
 }

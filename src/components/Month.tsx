@@ -52,7 +52,7 @@ export default function Month({ selectedDate, onDateSelect }: { selectedDate: Da
 
   return (
     <div>
-      <h3>{formattedDate}</h3>
+      <h4>{formattedDate}</h4>
       <h2>{maoriMonth}</h2>
     </div>
   )

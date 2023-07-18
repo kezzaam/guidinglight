@@ -4,7 +4,8 @@ import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from '../../../../../prisma/prisma'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
+import { User } from ".prisma/client"
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -69,9 +70,32 @@ export const authOptions: NextAuthOptions = {
             //     return session
 
             // },
-            async authorize(credentials) {
-                const user = { id: 1, name: 'Test-Test', email: 'test@test.com', password: 'test' }
-                return user
+            async authorize(credentials: any) {
+                if (!credentials.email || !credentials.password) {
+                    throw new Error("Please enter email and password")
+                }
+
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: credentials.email
+                    }
+                })
+
+                if (!user) {
+                    return null
+                }
+
+                const passwordMatch = await bcrypt.compare(credentials.password, user.password)
+
+                if (!passwordMatch) {
+                    return null
+                }
+
+                return {
+                    id: user.id + '',
+                    name: user.name,
+                    email: user.email,
+                }
             }
         })
     ],
@@ -80,9 +104,31 @@ export const authOptions: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     // // debug: process.env.NODE_ENV === "development",
-    // pages: {
-    //     signIn: "/signin",
-    // },
+    pages: {
+        signIn: "/signin",
+    },
+    callbacks: {
+        session: ({ session, token }) => {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id
+                }
+            }
+        },
+        jwt: async ({ token, user }) => {
+            const u = user as User;
+            if (user) {
+              return {
+                ...token,
+                id: u.id
+              };
+            }
+            return token;
+          }
+          
+    }
 
 }
 

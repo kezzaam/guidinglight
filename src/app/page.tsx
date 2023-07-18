@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Matariki from "@/components/Matariki"
-import Session from "@/components/Session"
 
 export default function Splash() {
+  const { data: session } = useSession()
   const [showMatariki, setShowMatariki] = useState(false)
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function Splash() {
       <Matariki />
     </div>
       )}
-      <Session />
+      <div>{JSON.stringify(session)}</div>
     </>
   )
 }

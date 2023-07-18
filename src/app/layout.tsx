@@ -1,4 +1,4 @@
-import Provider from '../context/Provider'
+import Provider from './api/auth/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches } from 'next/font/google'
@@ -22,13 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
       <body>
-        <Provider>
-          <div className="w-screen flex flex-col items-center justify-center space-y-4 p-4">
-            <main className={`w-screen content ${staatliches.className}`}>
+        <div className="w-screen flex flex-col items-center justify-center space-y-4 p-4">
+          <main className={`w-screen content ${staatliches.className}`}>
+            <Provider>
               {children}
-            </main>
-          </div>
-        </Provider>
+            </Provider>
+          </main>
+        </div>
       </body>
     </html>
   )

@@ -20,7 +20,7 @@ export default function Signup(): JSX.Element {
   })
 
   // Handle create account form submission
-  const handleCreateAccount = async (e) => {
+  const handleCreateAccount = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     axios.post('/api/users', data)
       .then(() => alert('Account created successfully!'))
@@ -41,7 +41,7 @@ export default function Signup(): JSX.Element {
       </div>
 
 
-      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 lg:max-w-[40%] lg:mx-auto" onSubmit={handleCreateAccount}>
+      <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto" onSubmit={handleCreateAccount}>
 
         <div>
           <label className="text-lg" htmlFor="name">

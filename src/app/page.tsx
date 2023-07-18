@@ -1,26 +1,41 @@
 "use client"
 
-import { useState } from 'react'
-import Month from '@/components/Month'
-import CalendarRow from '@/components/CalendarRow'
-import Maramataka from '@/components/Maramataka'
-import Footer from '@/components/Footer'
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Matariki from "@/components/Matariki"
+import Session from "@/components/Session"
 
-export default function Home() {
-  // Use state to manage the selected date
-  const [selectedDate, setSelectedDate] = useState(new Date())
+export default function Splash() {
+  const [showMatariki, setShowMatariki] = useState(false)
 
-  // Function to handle date selection
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date)
-  }
+  useEffect(() => {
+    const timeout = 
+      setTimeout(() => {
+        setShowMatariki(true)
+      }, 5000)
+
+    return () => clearTimeout(timeout)
+  }, [])
 
   return (
-    <div>
-      <Month selectedDate={selectedDate} onDateSelect={handleDateSelect} />
-      <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
-      <Maramataka selectedDate={selectedDate} onDateSelect={handleDateSelect}/>
-      <Footer />
+    <>
+        <div
+          className={`logo absolute top-0 left-0 z-10 w-full h-full flex flex-col items-center justify-center fadeinout`}
+        >
+          <Image
+            src="/images/logo.svg"
+            alt="Logo"
+            width={250}
+            height={250}
+            className=""
+          />
+        </div>
+      {showMatariki && (
+      <div className="matariki-stars absolute top-0 left-0 z-10 w-full h-full flex flex-col items-center justify-center">
+      <Matariki />
     </div>
+      )}
+      <Session />
+    </>
   )
 }

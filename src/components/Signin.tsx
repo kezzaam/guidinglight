@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 
 import { useState } from 'react'
@@ -19,7 +20,7 @@ export default function Signin(): JSX.Element {
   })
 
   // sign-in functionality
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     await signIn('credentials', { ...data, redirect: false })
       .then(() => alert('Logged in successfully!'))
@@ -35,7 +36,7 @@ export default function Signin(): JSX.Element {
         <h2 className="mt-6 text-center text-3xl">Sign in</h2>
         </div>
 
-        <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 lg:max-w-[40%] lg:mx-auto" onSubmit={handleSignIn}>
+        <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto" onSubmit={handleSignIn}>
 
           <div className="rounded-md shadow-sm -space-y-px">
             <div>

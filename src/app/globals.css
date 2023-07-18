@@ -19,7 +19,6 @@
 
 }
 
-
 :root {
   /* main colours */
   --cetaceanblue: #111033;
@@ -97,6 +96,12 @@ p {
   position: relative;
   overflow-y: auto;
   height: calc(100vh - 180px); /* Adjust the value based on footer height */
+}
+
+@media screen and (min-width: 768px) {
+  .content {
+    height: 100vh; /* Adjust the value based on footer height */
+  }
 }
 
 .calendar {
@@ -217,3 +222,80 @@ a:hover {
 .separator:not(:empty)::after {
   margin-left: .25em;
 }
+
+/* transition effect on splash / loading */
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-animation: fadeinout 8s linear forwards;
+  animation: fadeinout 8s linear forwards;
+  opacity: 0;
+}
+
+.matariki-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-animation: fadein 10s linear forwards;
+  animation: fadein 10s linear forwards;
+  opacity: 0;
+}
+
+@-webkit-keyframes fadein {
+  0% { opacity: 0; } /* Start with opacity 0 */
+  25% { opacity: 1; } /* Fade in */
+  100% { opacity: 1; } /* Maintain opacity at 1 */
+}
+
+@keyframes fadein {
+  0% { opacity: 0; } /* Start with opacity 0 */
+  25% { opacity: 1; } /* Fade in */
+  100% { opacity: 1; } /* Maintain opacity at 1 */
+}
+
+@-webkit-keyframes fadeinout {
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  25% { opacity: 1; }
+  50% { opacity: 1; }
+}
+
+.fadeinout {
+  transition-delay: 4s; /* Add a delay before the fade-out starts */
+}
+
+/* Twinkling stars animation */
+@keyframes twinkling {
+  0% {
+    opacity: 0.75;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.star {
+  animation-name: twinkling;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 4s;
+  animation-direction: alternate;
+  animation-delay: var(--delay)s; /* Use the random delay value */
+  box-shadow: 0 0 50px 15px var(--intensewhite)
+}
+
+

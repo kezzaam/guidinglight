@@ -50,8 +50,8 @@ export default function Footer() {
                 </Link>
             </div>
             <div className="w-[20%]">
-                <Link href="/">
-                <div className={`absolute bottom-0 lg:bottom-4 rounded-t-2xl lg:rounded-tl-sm lg:rounded-r-2xl lg:left-0 lg:pl-6 p-4 ${pathname == "/" ? "current" : ""}`}>                    
+                <Link href="/home">
+                <div className={`absolute bottom-0 lg:bottom-4 rounded-t-2xl lg:rounded-tl-sm lg:rounded-r-2xl lg:left-0 lg:pl-6 p-4 ${pathname == "/home" ? "current" : ""}`}>                    
                         <Image
                             src="/icons/mooncalendar.svg"
                             alt="Home"

@@ -2,8 +2,6 @@ import Provider from '../context/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches } from 'next/font/google'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export const staatliches = Staatliches({
   weight: '400',
@@ -26,11 +24,9 @@ export default function RootLayout({
       <body>
         <Provider>
           <div className="w-screen flex flex-col items-center justify-center space-y-4 p-4">
-            <Header />
             <main className={`w-screen content ${staatliches.className}`}>
               {children}
             </main>
-
           </div>
         </Provider>
       </body>

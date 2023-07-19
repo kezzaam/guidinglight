@@ -32,7 +32,7 @@ type Asterism = {
 
 const Cards: React.FC<CardProps> = ({ data }) => {
   return (
-    <div>
+    <>
       {data.map((item) => {
         if ('mag' in item) {
           // Handle star data
@@ -76,7 +76,7 @@ const Cards: React.FC<CardProps> = ({ data }) => {
         }
         return null
       })}
-    </div>
+    </>
   )
 }
 

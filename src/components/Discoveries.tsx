@@ -1,77 +1,103 @@
-import Cards from './Cards';
-import starData from '../data/stars.6.json';
-import constellationData from '../data/constellations.json'
-import asterismData from '../data/asterisms.json'
-import planetData from '../data/planets.json'
+"use client"
+
+import Cards from './Cards'
+import { processDiscoveries } from '../utils/processDiscoveries'
+import Search from './Search'
+import { useState, useCallback, useEffect } from 'react'
+import { useInfiniteQuery } from 'react-query'
 
 export default function Discoveries() {
-  // https://www.youtube.com/watch?v=R1FG54FY-18
-  // pagination and infinite scroll
-  // star data
-  const starArray = starData.features.map((feature) => {
-    const star = {
-    id: feature.id,
-    name: feature.properties.name,
-    desig: feature.properties.desig,
-    con: feature.properties.con,
-    mag: feature.properties.mag,
-    bv: feature.properties.bv,
-    geometry: feature.geometry,
-    type: feature.geometry.type,
-    coordinates: feature.geometry.coordinates
-  }
-  return star
-  })
+  // call data handling function
+  const discoveries = processDiscoveries()
+  // states for search and filter
+  const [inputValue, setInputValue] = useState('')
+  const [allDiscoveries] = useState(discoveries)
+  const [filteredDiscoveries, setFilteredDiscoveries] = useState(allDiscoveries)
 
-  // constellation data
-  const constellationArray = constellationData.features.map((feature) => {
-    const constellation = {
-    id: feature.id,
-    name: feature.properties.name,
-    desig: feature.properties.desig,
-    rank: feature.properties.rank,
-    display: feature.properties.display,
-    geometry: feature.geometry,
-    type: feature.geometry.type,
-    coordinates: feature.geometry.coordinates
+  // for infinite scroll from react query, so we don't have to load all the data at once
+  const fetchDiscoveries = async (page: number) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    return allDiscoveries.slice((page - 1) * 10, page * 10)
   }
-  return constellation
-  })
 
-  // asterism data
-  const asterismArray = asterismData.features.map((feature) => {
-    const asterism = {
-    id: feature.id,
-    name: feature.properties.n,
-    location: feature.properties.loc,
-    p: feature.properties.p,
-    geometry: feature.geometry,
-    type: feature.geometry.type,
-    coordinates: feature.geometry.coordinates
-  }
-  return asterism
-  })
+  const {
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ['query'],
+    async ({ pageParam = 1 }) => {
+      const response = await fetchDiscoveries(pageParam)
+      return response
+    },
+    {
+      getNextPageParam: (_, pages) => {
+        return pages.length + 1
+      },
+      initialData: {
+        pages: [filteredDiscoveries.slice(0, 12)], // first 12 items
+        pageParams: [1],
+      },
+    }
+  )
 
-  // planet data
-  const planetArray = Object.values(planetData).map((p) => {
-    const planet = {
-    id: p.id,
-    name: p.name,
-    desig: p.desig,
-    H: p.H,
-    elements: p.elements,
-    sym: p.sym
-  }
-  return planet
-  })
-
-  // Combine all arrays into a single array
-  const discoveriesArray = [...starArray, ...planetArray, ...constellationArray, ...asterismArray];
+  const handleSearch = (inputValue: string) => {
+    const filteredDiscoveries = allDiscoveries.filter((discovery) => {
+      return discovery.name.toLowerCase().includes(inputValue.toLowerCase());
+    });
+    setFilteredDiscoveries(filteredDiscoveries);
+  };
   
 
+
   return (
-    <section>
-      <Cards data={discoveriesArray} />
+    <section className="w-full p-[10%] flex flex-col items-center">
+      <div className="search sticky top-0">
+        <Search onSearch={handleSearch} />
+        <div>
+          <button
+          >
+            All
+          </button>
+          <button
+          >
+            Named Stars
+          </button>
+          <button
+          >
+            Un-named Stars
+          </button>
+          <button
+          >
+            Constellations
+          </button>
+          <button
+          >
+            Planets
+          </button>
+          <button
+          >
+            Asterisms
+          </button>
+        </div>
+        {/* pagination */}
+        <div>
+          {data?.pages.map((page) =>
+            page.map((data) => <div key={data.id}>{data.name}</div>)
+          )}
+          <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+            {isFetchingNextPage
+              ? 'Loading more...'
+              : (data?.pages.length ?? 0) < 12
+                ? 'Load More'
+                : 'Nothing more to load'}
+          </button>
+        </div>
+      </div>
+
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 gap-4 max-w-full md:grid-cols-2 sm:grid-cols-1">
+        <Cards data={filteredDiscoveries} />
+      </div>
     </section>
   )
 }

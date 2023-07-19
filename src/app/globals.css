@@ -95,12 +95,12 @@ p {
 .content {
   position: relative;
   overflow-y: auto;
-  height: calc(100vh - 180px); /* Adjust the value based on footer height */
+  height: 100vh; /* Adjust the value based on footer height */
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 1024px) {
   .content {
-    height: 100vh; /* Adjust the value based on footer height */
+    height: calc(100vh - 80px); /* Adjust the value based on footer height */
   }
 }
 

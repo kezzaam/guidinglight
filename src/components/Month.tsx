@@ -36,7 +36,7 @@ export default function Month({ selectedDate, onDateSelect }: { selectedDate: Da
 
     // Format the selected date
     const formattedDate = formatDate(selectedDate)
-    console.log('Selected date:', formattedDate)
+    // console.log('Selected date:', formattedDate)
 
   // Function to get the Māori month based on the English month
   function getMaoriMonth(englishMonth: string) {
@@ -48,7 +48,7 @@ export default function Month({ selectedDate, onDateSelect }: { selectedDate: Da
   // Get the Māori month for the current English month
   const englishMonth = currentDate.toLocaleString('en-GB', { month: 'long' })
   const maoriMonth = getMaoriMonth(englishMonth)
-  console.log('Māori month:', maoriMonth)
+  // console.log('Māori month:', maoriMonth)
 
   return (
     <div>

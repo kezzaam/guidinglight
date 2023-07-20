@@ -1,83 +1,38 @@
-import React from 'react'
-import { Star } from './StarCard'
-import StarCard from './StarCard'
+import StarCard, { Star } from './StarCard'
+import PlanetCard, { Planet } from './PlanetCard'
+import ConstellationCard, { Constellation } from './ConstellationCard'
+import AsterismCard, { Asterism } from './AsterismCard'
 
-type CardProps = {
-  data: (Star | Planet | Constellation | Asterism)[] // Adjust the types based on your data structure
+type DiscoveryItem = Star | Planet | Constellation | Asterism;
+
+interface CardsProps {
+  data: (Star | Planet | Constellation | Asterism)[]
+  inputValue: string
 }
 
-type Planet = {
-  id: string
-  name: string
-  desig: string
-  H: string
-  elements: any[] // Adjust the type based on the actual structure
-  sym: string
-}
+export default function Cards({ data, inputValue }: CardsProps) {
+  const filteredData = data.filter((item: DiscoveryItem) =>
+    item.name.toLowerCase().includes(inputValue.toLowerCase())
+  )
 
-type Constellation = {
-  id: string
-  name: string
-  desig: string
-  rank: string
-  display: string
-}
-
-type Asterism = {
-  id: string
-  name: string
-  location: string
-  p: string
-}
-
-const Cards: React.FC<CardProps> = ({ data }) => {
   return (
     <>
-      {data.map((item) => {
-        if ('mag' in item) {
-          // Handle star data
-          // Handle star data
-          const star = item as Star;
-          return <StarCard key={star.id} star={star} />
-        } else if ('H' in item) {
-          // Handle planet data
-          const planet = item as Planet
-          return (
-            <div key={planet.id}>
-              <h3>{planet.name}</h3>
-              <p>Designation: {planet.desig}</p>
-              <p>H: {planet.H}</p>
-              {/* Render other properties specific to planets */}
-            </div>
-          )
-        } else if ('rank' in item) {
-          // Handle constellation data
-          const constellation = item as Constellation
-          return (
-            <div key={constellation.id}>
-              <h3>{constellation.name}</h3>
-              <p>Designation: {constellation.desig}</p>
-              <p>Rank: {constellation.rank}</p>
-              <p>Display: {constellation.display}</p>
-              {/* Render other properties specific to constellations */}
-            </div>
-          )
-        } else if ('location' in item) {
-          // Handle asterism data
-          const asterism = item as Asterism
-          return (
-            <div key={asterism.id}>
-              <h3>{asterism.name}</h3>
-              <p>Location: {asterism.location}</p>
-              <p>P: {asterism.p}</p>
-              {/* Render other properties specific to asterisms */}
-            </div>
-          )
+      {filteredData.map((item: DiscoveryItem) => {
+        if (item.category === 'star') {
+          const starItem = item as Star;
+          return <StarCard key={starItem.id} star={starItem} />;
+        } else if (item.category === 'planet') {
+          const planetItem = item as Planet;
+          return <PlanetCard key={planetItem.id} planet={planetItem} />;
+        } else if (item.category === 'constellation') {
+          const constellationItem = item as Constellation;
+          return <ConstellationCard key={constellationItem.id} constellation={constellationItem} />;
+        } else if (item.category === 'asterism') {
+          const asterismItem = item as Asterism;
+          return <AsterismCard key={asterismItem.id} asterism={asterismItem} />;
         }
-        return null
+        return null; // Add this line to handle other cases or unknown types
       })}
     </>
   )
 }
-
-export default Cards

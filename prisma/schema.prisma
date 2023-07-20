@@ -67,6 +67,48 @@ model Star {
   geometry_type        String
   geometry_coordinates Float[]
   description          String?
+  isNamed              Boolean      @default(false)
+  category             String?      @default("star")
 }
+
+model Planet {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  img      String
+  trajectory Boolean
+  H        Float
+  sym      String
+  maori_name String?
+  description String?
+  category String? @default("planet")
+}
+
+model Constellation {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  constellation_id String    
+  name         String
+  desig        String
+  rank         Int
+  display      Float[]
+  geometry     Json
+  maori_name   String?
+  description  String?
+  category     String?   @default("constellation")
+}
+
+model Asterism {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  asterism_id String 
+  name String 
+  loc    Float[] 
+  p      Int   
+  geometry Json  
+  maori_name String?
+  description String?
+  category String @default("asterism")
+}
+
+
+
 
 

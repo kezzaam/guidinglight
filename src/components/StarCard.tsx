@@ -1,24 +1,21 @@
-import { ReactNode } from 'react'
-import Image from 'next/image'
 
 export interface Star {
-    name: ReactNode
-    desig: ReactNode
-    con: ReactNode
-    mag: ReactNode
-    bv: ReactNode
-    id: number
-    properties: {
-        name: string
-        desig: string
-        con: string
-        mag: number
-        bv: number
-    }
-    geometry: {
-        type: string
-        coordinates: number[]
-    }
+    id: string
+    star_id: number
+    name: string
+    maori_name: string
+    designation: string
+    asterism: string
+    constellation: string
+    maori_constellation: string
+    magnitude: number
+    bv_index: number
+    geometry: JSON
+    geometry_type: string
+    geometry_coordinates: number[]
+    description: string
+    isNamed: boolean
+    category: string
 }
 
 type StarCardProps = {
@@ -46,7 +43,7 @@ export default function StarCard({ star }: StarCardProps) {
                 >
                     <g>
                         <path
-                            className="hover:star"
+                            className="star"
                             fill="#F8F9FA"
                             d="M147, 147 c-25.5, 0-25.787, 26.359-25.787, 26.359 C121.213, 150.438, 96, 147, 96, 147 c25.787, 0, 25.213-26.359, 25.213-26.359 C121.213, 147, 147, 147, 147, 147z"
                             transform="translate(-90, -220) scale(3, 3)"
@@ -57,10 +54,14 @@ export default function StarCard({ star }: StarCardProps) {
                 <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{star.name}</h5>
                     <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        <p>Designation: {star.desig}</p>
-                        <p>Constellation: {star.con}</p>
-                        <p>Magnitude: {star.mag}</p>
-                        <p>BV Index: {star.bv}</p></div>
+                        <p>Maori Name: {star.maori_name}</p>
+                        <p>Designation: {star.designation}</p>
+                        <p>Constellation: {star.constellation}</p>
+                        <p>Asterism: {star.asterism}</p>
+                        <p>Magnitude: {star.magnitude}</p>
+                        <p>Maori Constellation: {star.maori_constellation}</p>
+                        <p>Description {star.description}</p>
+                    </div>
                 </div>
             </a>
         </>

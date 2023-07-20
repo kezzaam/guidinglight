@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import starData from '../../../data/stars.6.json'
+import starData from '../../../../data/stars.6.json'
 
 export interface Star {
   name: ReactNode

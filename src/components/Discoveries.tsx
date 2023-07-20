@@ -1,102 +1,73 @@
-"use client"
-
 import Cards from './Cards'
-import { processDiscoveries } from '../utils/processDiscoveries'
 import Search from './Search'
-import { useState, useCallback, useEffect } from 'react'
-import { useInfiniteQuery } from 'react-query'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Filter from './Filter'
+import { Star, Planet, Constellation, Asterism } from '@prisma/client'
+
+// Define a union type for the possible item types in the 'discoveries' array
+type DiscoveryItem = Star | Planet | Constellation | Asterism;
 
 export default function Discoveries() {
-  // call data handling function
-  const discoveries = processDiscoveries()
-  // states for search and filter
   const [inputValue, setInputValue] = useState('')
-  const [allDiscoveries] = useState(discoveries)
-  const [filteredDiscoveries, setFilteredDiscoveries] = useState(allDiscoveries)
+  const [discoveries, setDiscoveries] = useState<DiscoveryItem[]>([])
+  const [filteredData, setFilteredData] = useState<DiscoveryItem[]>([])
 
-  // for infinite scroll from react query, so we don't have to load all the data at once
-  const fetchDiscoveries = async (page: number) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    return allDiscoveries.slice((page - 1) * 10, page * 10)
+  const handleSearch = (keyword: string) => {
+    setInputValue(keyword)
   }
 
-  const {
-    data,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
-    ['query'],
-    async ({ pageParam = 1 }) => {
-      const response = await fetchDiscoveries(pageParam)
-      return response
-    },
-    {
-      getNextPageParam: (_, pages) => {
-        return pages.length + 1
-      },
-      initialData: {
-        pages: [filteredDiscoveries.slice(0, 12)], // first 12 items
-        pageParams: [1],
-      },
+  const handleFilter = (option: string) => {
+    switch (option) {
+      case 'all':
+        setFilteredData(discoveries)
+        break
+      case 'named':
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && discovery.isNamed))
+        break
+      case 'unnamed':
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && !discovery.isNamed))
+        break
+      case 'constellations':
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'constellation'))
+        break
+      case 'asterisms':
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'asterism'))
+        break
+      case 'planets':
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'planet'))
+        break
+      default:
+        setFilteredData(discoveries)
+        break
     }
-  )
+  }
 
-  const handleSearch = (inputValue: string) => {
-    const filteredDiscoveries = allDiscoveries.filter((discovery) => {
-      return discovery.name.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredDiscoveries(filteredDiscoveries);
-  };
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/discoveries')
+        setDiscoveries(response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
 
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    handleFilter('all') // Initialize with all discoveries
+  }, [discoveries])
 
   return (
-    <section className="w-full p-[10%] flex flex-col items-center">
-      <div className="search sticky top-0">
+    <section className="w-full p-[10%] sm:p-[5%]">
+      <div className="sticky top-0 lg:flex lg:flex-row lg:space-x-2 lg:justify-center">
         <Search onSearch={handleSearch} />
-        <div>
-          <button
-          >
-            All
-          </button>
-          <button
-          >
-            Named Stars
-          </button>
-          <button
-          >
-            Un-named Stars
-          </button>
-          <button
-          >
-            Constellations
-          </button>
-          <button
-          >
-            Planets
-          </button>
-          <button
-          >
-            Asterisms
-          </button>
-        </div>
-        {/* pagination */}
-        <div>
-          {data?.pages.map((page) =>
-            page.map((data) => <div key={data.id}>{data.name}</div>)
-          )}
-          <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
-            {isFetchingNextPage
-              ? 'Loading more...'
-              : (data?.pages.length ?? 0) < 12
-                ? 'Load More'
-                : 'Nothing more to load'}
-          </button>
-        </div>
+        <Filter onFilter={handleFilter} />
       </div>
-
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 gap-4 max-w-full md:grid-cols-2 sm:grid-cols-1">
-        <Cards data={filteredDiscoveries} />
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 gap-4 max-w-full md:grid-cols-2 sm:grid-cols-1 my-4">
+        <Cards data={filteredData} inputValue={inputValue} />
       </div>
     </section>
   )

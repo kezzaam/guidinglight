@@ -1,4 +1,4 @@
-import constellations from './../../../data/constellations.json';
+import constellations from '../../../../data/constellations.json';
 
 export async function GET(request: Request) {
   try {

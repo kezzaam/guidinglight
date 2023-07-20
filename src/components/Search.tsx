@@ -23,18 +23,19 @@ export default function Search({ onSearch }: SearchProps) {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <>
+      <form onSubmit={handleSubmit} className="flex flex-row items-center justify-center">
         <input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={handleChange}
+          className="rounded-l-lg py-2 px-4 bg-bluegrey text-intensewhite text-lg placeholder-intensewhite placeholder-opacity-50"
         />
-        <button type="submit">
+        <button type="submit" className="rounded-r-lg bg-bluegrey text-lg py-2 px-4">
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </form>
-    </div>
+    </>
   )
 }

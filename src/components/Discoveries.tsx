@@ -23,10 +23,10 @@ export default function Discoveries() {
         setFilteredData(discoveries)
         break
       case 'named':
-        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && discovery.isNamed))
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && (discovery as Star).isNamed))
         break
       case 'unnamed':
-        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && !discovery.isNamed))
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && !(discovery as Star).isNamed))
         break
       case 'constellations':
         setFilteredData(discoveries.filter((discovery) => discovery.category === 'constellation'))
@@ -47,7 +47,7 @@ export default function Discoveries() {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/discoveries')
-        setDiscoveries(response.data)
+        setDiscoveries(response.data) as unknown as DiscoveryItem[]
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -58,15 +58,15 @@ export default function Discoveries() {
 
   useEffect(() => {
     handleFilter('all') // Initialize with all discoveries
-  }, [discoveries])
+  })
 
   return (
-    <section className="w-full p-[10%] sm:p-[5%]">
+    <section className="w-full p-4 mt-4">
       <div className="sticky top-0 lg:flex lg:flex-row lg:space-x-2 lg:justify-center">
         <Search onSearch={handleSearch} />
         <Filter onFilter={handleFilter} />
       </div>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 gap-4 max-w-full md:grid-cols-2 sm:grid-cols-1 my-4">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 gap-4 max-w-full md:grid-cols-2 sm:grid-cols-1 my-4 xl:px-[10%] px-[5%]">
         <Cards data={filteredData} inputValue={inputValue} />
       </div>
     </section>

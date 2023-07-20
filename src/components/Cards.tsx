@@ -6,7 +6,7 @@ import AsterismCard, { Asterism } from './AsterismCard'
 type DiscoveryItem = Star | Planet | Constellation | Asterism;
 
 interface CardsProps {
-  data: (Star | Planet | Constellation | Asterism)[]
+  data: DiscoveryItem[]
   inputValue: string
 }
 

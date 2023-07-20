@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         cetaceanblue: '#111033',
         intensewhite: '#F8F9FA',
+        outerspace: '#201F3D',
         bluegrey: '#619DC3',
         fuzzywuzzy: '#CC6666',
         deer: '#B78E5C',

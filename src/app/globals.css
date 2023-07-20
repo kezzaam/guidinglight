@@ -187,6 +187,13 @@ button:disabled:hover {
   opacity: 50%;
 }
 
+.selected, .selected:hover {
+  background: none;
+  background-color: var(--fuzzywuzzy);
+  opacity: 80;
+  transform: scale(95%);
+}
+
 .chivo {
   font-family: Chivo, sans-serif;
   letter-spacing: 0;

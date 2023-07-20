@@ -1,3 +1,4 @@
+import ConstellationMap from "./ConstellationMap"
 
 export interface Constellation {
     id: string,
@@ -21,18 +22,12 @@ export default function ConstellationCard({ constellation }: ConstellationCardPr
 
     return (
         <>
-            <a href="#" className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-
-                <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{constellation.name}</h5>
-                    <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        <p>Designation: {constellation.desig}</p>
-                        <p>Rank: {constellation.rank}</p>
-                        <p>Maori Name: {constellation.maori_name}</p>
-                        <p>Description: {constellation.description}</p>
-                    </div>
-                </div>
-            </a>
+        <a href="#" className="flex flex-col items-center bg-cetaceanblue border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace ">
+        <div className="p-4">
+        <h2 className="text-2xl mt-4">{constellation.name}</h2>
+        <ConstellationMap constellationId={constellation.constellation_id} />
+        </div>
+        </a>
         </>
     )
 }

@@ -47,6 +47,16 @@ model User {
   updatedAt DateTime @updatedAt
   accounts      Account[]
   sessions      Session[]
+  favourites    Favourites[]
+}
+
+model VerificationToken {
+  identifier String   @id @map("_id")
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
 }
 
 // if changes are made - npx prisma generate to update the prisma client
@@ -69,6 +79,7 @@ model Star {
   description          String?
   isNamed              Boolean      @default(false)
   category             String?      @default("star")
+  favourites           Favourites[]
 }
 
 model Planet {
@@ -81,6 +92,7 @@ model Planet {
   maori_name String?
   description String?
   category String? @default("planet")
+  favourites Favourites[]
 }
 
 model Constellation {
@@ -94,6 +106,7 @@ model Constellation {
   maori_name   String?
   description  String?
   category     String?   @default("constellation")
+  favourites   Favourites[]
 }
 
 model Asterism {
@@ -106,9 +119,21 @@ model Asterism {
   maori_name String?
   description String?
   category String @default("asterism")
+  favourites Favourites[]
 }
 
-
-
+model Favourites {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String @db.ObjectId
+  starId   String @db.ObjectId
+  planetId String @db.ObjectId
+  constellationId String @db.ObjectId
+  asterismId String @db.ObjectId
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  star     Star   @relation(fields: [starId], references: [id], onDelete: Cascade)
+  planet   Planet @relation(fields: [planetId], references: [id], onDelete: Cascade)
+  constellation Constellation @relation(fields: [constellationId], references: [id], onDelete: Cascade)
+  asterism Asterism @relation(fields: [asterismId], references: [id], onDelete: Cascade)
+}
 
 

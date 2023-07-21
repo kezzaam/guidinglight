@@ -95,12 +95,13 @@ p {
 .content {
   position: relative;
   overflow-y: auto;
-  height: 100vh; /* Adjust the value based on footer height */
+  height: 100vh; /* No footer allowance on large */
+  margin: 0;
 }
 
 @media screen and (max-width: 1024px) {
   .content {
-    height: calc(100vh - 80px); /* Adjust the value based on footer height */
+    height: calc(100vh - 80px); /* Footer area on sm and md */
   }
 }
 

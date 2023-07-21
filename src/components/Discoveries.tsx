@@ -47,7 +47,7 @@ export default function Discoveries() {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/discoveries')
-        setDiscoveries(response.data) as unknown as DiscoveryItem[]
+        setDiscoveries(response.data)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -58,7 +58,8 @@ export default function Discoveries() {
 
   useEffect(() => {
     handleFilter('all') // Initialize with all discoveries
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [discoveries])
 
   return (
     <section className="w-full p-4 mt-4">

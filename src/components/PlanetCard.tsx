@@ -26,10 +26,11 @@ export default function PlanetCard({ planet }: PlanetCardProps) {
                 <Image src="/images/moon-01.svg" alt="Moon" width={200} height={200} />
                 </div>
                 <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{planet.name}</h5>
-                    <div className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        <p>Symbol: {planet.sym}</p>
-                        <p>Maori Name: {planet.maori_name}</p>
+                    <h2 className="mb-2 text-2xl font-bold">{planet.name}</h2>
+                    <div className="mb-3 font-normal text-intensewhite">
+                        <p>{planet.sym}</p>
+                        <h4 className="text-3xl">{planet.maori_name}</h4>
+                        <p>{planet.description}</p>
                     </div>
                 </div>
             </a>

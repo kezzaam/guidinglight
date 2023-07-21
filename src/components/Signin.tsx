@@ -1,7 +1,7 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client"
 
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
@@ -10,19 +10,28 @@ import {
   faGithub,
   faGoogle,
 } from '@fortawesome/free-brands-svg-icons'
+import SignoutButton from './SignoutButton'
 
 export default function Signin(): JSX.Element {
   const [data, setData] = useState({
     email: '',
     password: '',
   })
+  const [hasError, setHasError] = useState(false)
+  const pathname = usePathname()
 
-  // sign-in functionality
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    await signIn('credentials', { ...data, redirect: true, callbackUrl: '/home' })
-      .then(() => alert('Logged in successfully!'))
-      .catch((err) => alert(err))
+    try {
+      await signIn('credentials', { ...data, redirect: true, callbackUrl: '/home' })
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.name, error.message)
+        if (pathname === '/signin' && pathname.includes('error')) {
+          setHasError(true)
+        }
+      }
+    }
   }
 
   const handleGoogleSignIn = async () => { }
@@ -31,10 +40,10 @@ export default function Signin(): JSX.Element {
   return (
     <>
       <div>
-        <h2 className="mt-6 text-center text-3xl">Sign in</h2>
+        <h2 className="mt-6 text-center text-3xl lg:pt-20">Sign in</h2>
       </div>
 
-      <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto" onSubmit={handleSignIn}>
+      <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:justify-center" onSubmit={handleSignIn}>
 
         <div className="rounded-md shadow-sm -space-y-px">
           <div>
@@ -66,8 +75,8 @@ export default function Signin(): JSX.Element {
             />
           </div>
         </div>
-        {/* {errorMessage && <div className="text-[--pastelgrey]">{errorMessage}</div>} */}
-
+        
+        {hasError === true && <div className="text-intensewhite p-2 bg-fuzzywuzzy border border-intensewhite rounded-sm">Invalid email or password. Please try again.</div>}
         <div className="flex items-center justify-between text-lg">
           <div className="flex items-center">
             <input type="checkbox" className="h-4 w-4 rounded" />
@@ -109,6 +118,7 @@ export default function Signin(): JSX.Element {
             Don't have an account? <Link href="/signup">Create one</Link>
           </h2>
         </div>
+        <SignoutButton/>
       </form>
     </>
   )

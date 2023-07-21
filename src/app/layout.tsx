@@ -22,8 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
       <body>
-        <div className="w-screen flex flex-col items-center justify-center space-y-4 p-4">
-          <main className={`w-screen content ${staatliches.className}`}>
+        <div className="w-screen flex flex-col items-center justify-center space-y-4">
+          <main className={`w-screen content ${staatliches.className} py-4`}>
             <Provider>
               {children}
             </Provider>

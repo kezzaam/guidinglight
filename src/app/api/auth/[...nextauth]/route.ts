@@ -34,78 +34,47 @@ export const authOptions: NextAuthOptions = {
                     // placeholder: "Password"
                 },
             },
-            // async authorize(credentials: any) {
-            //     // retrieve user from db to verify credentials
-            //     // docs: https://next-auth.js.org/configuration/providers/credentials
-            //     // check for existing user
-            //     if (!credentials.email || !credentials.password) {
-            //         throw new Error("Please enter email and password")
-            //     }
-            //     const user = await prisma.user.findUnique({
-            //         where: {
-            //             email: credentials.email
-            //         }
-            //     })
 
-            //     // if user not found
-            //     if (!user || !user?.hashedPassword) {
-            //         throw new Error("No user found")
-            //     }
-
-            //     // check if password matches
-            //     const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword)
-            //     if (!passwordMatch) {
-            //         throw new Error("Incorrect password")
-            //     }
-            //     // if user found and password matches
-            //     // Create a session for the authenticated user
-            //     const session = {
-            //         user: {
-            //             id: user.id,
-            //             email: user.email,
-            //             // Include any other relevant user data
-            //         },
-            //     }
-
-            //     return session
-
-            // },
             async authorize(credentials: any) {
                 if (!credentials.email || !credentials.password) {
-                    throw new Error("Please enter email and password")
-                }
-
-                const user = await prisma.user.findUnique({
+                    throw new Error("Please enter email and password");
+                  }
+                
+                  const user = await prisma.user.findUnique({
                     where: {
-                        email: credentials.email
+                      email: credentials.email
                     }
-                })
-
-                if (!user) {
-                    return null
-                }
-
-                const passwordMatch = await bcrypt.compare(credentials.password, user.password)
-
-                if (!passwordMatch) {
-                    return null
-                }
-
-                return {
+                  });
+                
+                  if (!user) {
+                    throw new Error("Invalid email or password");
+                  }
+                
+                  const passwordMatch = await bcrypt.compare(credentials.password, user.password);
+                
+                  if (!passwordMatch) {
+                    throw new Error("Invalid email or password");
+                  }
+                
+                  return {
                     id: user.id + '',
                     name: user.name,
                     email: user.email,
+                  };
                 }
-            }
         })
     ],
     session: {
-        strategy: "jwt",
+        strategy: "jwt", // use JWTs instead of database sessions
+        // strategy: "database" // default database persisted sessions
     },
     secret: process.env.NEXTAUTH_SECRET,
     // // debug: process.env.NODE_ENV === "development",
     pages: {
-        signIn: "/signin",
+        signIn: '/signin',
+        signOut: '/signout',
+        error: '/signin', // Error code passed in query string as ?error=
+        newUser: '/welcome' // New users will be directed here on first sign in
     },
     callbacks: {
         session: ({ session, token }) => {
@@ -117,6 +86,7 @@ export const authOptions: NextAuthOptions = {
                 }
             }
         },
+
         jwt: async ({ token, user }) => {
             const u = user as User;
             if (user) {
@@ -126,8 +96,7 @@ export const authOptions: NextAuthOptions = {
               };
             }
             return token;
-          }
-          
+          }        
     }
 
 }

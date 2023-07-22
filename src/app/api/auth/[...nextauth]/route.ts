@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
         // console.log("incoming credentials", credentials)
         // check if email and password are valid
         if (!credentials.email || !credentials.password) {
-          return null
+          throw new Error('Please enter your email and password')
         }
 
         const user = await prisma.user.findUnique({
@@ -46,14 +46,14 @@ export const authOptions: NextAuthOptions = {
         // console.log("user from prisma: ", user)
 
         if (!user) {
-          return null
+          throw new Error('No user found')
         }
 
         const passwordsMatch = await bcrypt.compare(credentials.password, user.password)
         // console.log("passwordsMatch", passwordsMatch)
         if (!passwordsMatch) {
-          return null
-        }
+          throw new Error('Incorrect password')
+                }
 
         return user
       }

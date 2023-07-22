@@ -1,20 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client"
 
+import { useSession } from 'next-auth/react'
 import Button from './Button'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 export default function Welcome() {
-    const { data: session } = useSession()
-    const userName = session?.user?.name || "friend"
+    // Get the user's name from the session
+    // There is a bug here, this should work but it doesn't
+    // returning undefined
+    const { data: session, status } = useSession();
 
-    const router = useRouter()
-
-    const handleGotIt = () => {
-        router.push('/home')
+    // Check if the session is loading
+    if (status === 'loading') {
+        return <div>Loading...</div>;
     }
+
+    // Check if the session data is available
+    const userName = session?.user?.name || "Guest";
+
+    console.log(session?.user)
+
 
     return (
 
@@ -70,7 +77,9 @@ export default function Welcome() {
                         />
                         <h6>Customisation options</h6>
                     </div>
-                    <Button onClick={handleGotIt}>Got it, thanks!</Button>
+                    <Link href="/home">
+                    <Button>Got it, thanks!</Button>
+                    </Link>
                 </div>
 
             </div>

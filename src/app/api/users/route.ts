@@ -14,19 +14,19 @@ export async function GET(request: Request) {
 // create new user
 export async function POST(request: Request) {
   try {
-    const data = await request.json()
-    const { name, email, password } = data
+    const body = await request.json()
+    const { name, email, password } = body
 
     // check if all fields are present
     if (!name || !email || !password) {
-      return new Response(JSON.stringify({ error: 'Missing fields' }))
+      return new Response('Please fill out all fields', { status: 400 })
     }
 
     // check if email exists
     const userExists = await prisma.user.findUnique({ where: { email } })
 
     if (userExists) {
-      return new Response(JSON.stringify({ error: 'Email already registered' }))
+      return new Response('User already exists', { status: 400 })
     }
 
     // hash password
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({ data: { name, email, password:hashedPassword } })
     return new Response(JSON.stringify({ user }))
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }))
+    return new Response(JSON.stringify({ error: error.message, status: 500 }))
   }
 }
 

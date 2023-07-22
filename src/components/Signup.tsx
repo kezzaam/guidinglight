@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { signIn } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
-import SignoutButton from './SignoutButton'
+import { toast } from 'react-hot-toast'
 
 // Component for user sign-up functionality.
 
@@ -24,7 +24,7 @@ export default function Signup(): JSX.Element {
     password: "",
   })
 
-  const handleCreateAccount = async (e) => {
+  const handleCreateAccount = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     const response = await fetch('/api/users', {
       method: 'POST',
@@ -40,20 +40,14 @@ export default function Signup(): JSX.Element {
       await signIn('credentials', {
         ...data,
         redirect: true, // Redirect the user after signing in
-        callbackUrl: '/signup/welcome',
+        callbackUrl: '/welcome',
       })
+      toast.success('Success!')
     } else {
       // Handle account creation failure, e.g., display an error message
-      console.error('Account creation failed.')
+      toast.error('Email or password already registered')
     }
   }
-
-  // Handle Google sign-up
-  const handleGoogleSignUp = () => { }
-
-  // Handle Github sign-up
-  const handleGithubSignUp = () => { }
-
 
   return (
     <>
@@ -132,13 +126,13 @@ export default function Signup(): JSX.Element {
           {/* 3rd party sign-up buttons */}
           <button
             className="secondary group relative w-full flex justify-center py-2 px-4 border border-transparent text-intensewhite text-2xl rounded-md"
-            onClick={handleGoogleSignUp}>
+            onClick={() => signIn('google')}>
             <FontAwesomeIcon icon={faGoogle} />
           </button>
 
           <button
             className="secondary group relative w-full flex justify-center py-2 px-4 border border-transparent text-intensewhite text-2xl rounded-md"
-            onClick={handleGithubSignUp}>
+            onClick={() => signIn('github')}>
             <FontAwesomeIcon icon={faGithub} />
           </button>
         </div>
@@ -146,7 +140,6 @@ export default function Signup(): JSX.Element {
         <div>
           <h2 className="mt-2 text-left text-lg text-intensewhite">
             Already have an account? <Link href="/signin">Sign in</Link>
-            <SignoutButton />
           </h2>
         </div>
       </form>

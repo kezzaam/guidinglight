@@ -35,7 +35,7 @@ const phase = maramataka.find((phase) => phase.moonphase_id === moonPhaseValue);
   return (
     <div className="flex flex-col items-center mx-auto lg:flex-row lg:justify-between sm:mx-[5%] lg:mx-[10%] lg:h-full lg:mt-10 lg:space-x-10">
       <h3 className="lg:w-[25%] lg:text-right">{phase?.name}</h3>
-      <Image src={phase?.image || ''} alt={phase?.name || ''} width={500} height={500} />
+      <Image src={phase?.image || ''} alt={phase?.name || ''} width={500} height={500} priority={true}/>
       <div className="pb-10 lg:w-[25%] lg:bg-cetaceanblue lg:bg-opacity-80 lg:px-4 lg:rounded-2xl lg:py-10">
       <h4>{phase?.energy} energy</h4>
       <p>{phase?.goodFor}</p>

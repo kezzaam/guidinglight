@@ -1,3 +1,4 @@
+import HotToast from '@/context/HotToast'
 import Provider from '../context/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body>
         <div className="w-screen flex flex-col items-center justify-center space-y-4">
           <Provider>
+            <HotToast />
             <main className={`w-screen content ${staatliches.className} py-4`}>
               {children}
             </main>

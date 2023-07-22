@@ -2,7 +2,6 @@
 "use client"
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
@@ -11,28 +10,35 @@ import {
   faGithub,
   faGoogle,
 } from '@fortawesome/free-brands-svg-icons'
-import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 export default function Signin() {
-  const { data: session, status } = useSession()
-  const router = useRouter()
   const [data, setData] = useState({
     email: "",
     password: "",
   })
 
+  const router = useRouter()
+
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     signIn('credentials', {
       ...data,
-      redirect: true,
-      callbackUrl: '/home',
+      // this has to be false to stop redirect on error
+      redirect: false,
     })
+    .then((callback) => {
+      if (callback?.error) {
+        toast.error(callback.error)
+      }
 
-}
-
-  const handleGoogleSignIn = async () => { }
-  const handleGithubSignIn = async () => { }
+      if (callback?.ok && !callback?.error) {
+        toast.success('Sign in successful!')
+        router.push('/welcome')
+      }
+    })
+  }
 
   return (
     <>
@@ -97,15 +103,14 @@ export default function Signin() {
           {/* 3rd party provider buttons */}
           <button
             className="secondary group relative w-full flex justify-center py-2 px-4 border border-transparent text-intensewhite text-2xl rounded-md"
-
-            onClick={handleGoogleSignIn}>
+            onClick={() => signIn('google')}>
             <FontAwesomeIcon icon={faGoogle} />
           </button>
 
           <button
             className="secondary group relative w-full flex justify-center py-2 px-4 border border-transparent text-intensewhite text-2xl rounded-md"
 
-            onClick={handleGithubSignIn}>
+            onClick={() => signIn('github')}>
             <FontAwesomeIcon icon={faGithub} />
           </button>
         </div>

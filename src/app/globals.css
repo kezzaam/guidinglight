@@ -27,7 +27,7 @@
   --fuzzywuzzy: #C3616C;
   --deer: #C38761;
   /* gradients */
-  --warmgradient: linear-gradient(90deg, #95344F, #EFA970);
+  --warmgradient: linear-gradient(#EFA970, #95344F);
   --coolgradient: linear-gradient(90deg, #34957A, #C3B861);
   /* gradient colours */
   --fawn: #EFA970;
@@ -81,7 +81,24 @@ h4 {
   font-size: 1rem;
   color: var(--bluegrey);
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: tight;
+}
+
+h5 {
+  background: var(--warmgradient);
+  font-family: Chivo, sans-serif;
+  font-weight: 800;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h6 {
+  font-family: Chivo, sans-serif;
+  font-size: 1.1rem;
+  color: var(--intensewhite);
+  font-weight: 700;
+  letter-spacing: tight;
 }
 
 p {

@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
@@ -10,29 +11,25 @@ import {
   faGithub,
   faGoogle,
 } from '@fortawesome/free-brands-svg-icons'
-import SignoutButton from './SignoutButton'
+import { useSession } from 'next-auth/react'
 
-export default function Signin(): JSX.Element {
+export default function Signin() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   })
-  const [hasError, setHasError] = useState(false)
-  const pathname = usePathname()
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    try {
-      await signIn('credentials', { ...data, redirect: true, callbackUrl: '/home' })
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.name, error.message)
-        if (pathname === '/signin' && pathname.includes('error')) {
-          setHasError(true)
-        }
-      }
-    }
-  }
+    signIn('credentials', {
+      ...data,
+      redirect: true,
+      callbackUrl: '/home',
+    })
+
+}
 
   const handleGoogleSignIn = async () => { }
   const handleGithubSignIn = async () => { }
@@ -76,7 +73,7 @@ export default function Signin(): JSX.Element {
           </div>
         </div>
         
-        {hasError === true && <div className="text-intensewhite p-2 bg-fuzzywuzzy border border-intensewhite rounded-sm">Invalid email or password. Please try again.</div>}
+        {/* {hasError === true && <div className="text-intensewhite p-2 bg-fuzzywuzzy border border-intensewhite rounded-sm">Invalid email or password. Please try again.</div>} */}
         <div className="flex items-center justify-between text-lg">
           <div className="flex items-center">
             <input type="checkbox" className="h-4 w-4 rounded" />
@@ -118,7 +115,6 @@ export default function Signin(): JSX.Element {
             Don't have an account? <Link href="/signup">Create one</Link>
           </h2>
         </div>
-        <SignoutButton/>
       </form>
     </>
   )

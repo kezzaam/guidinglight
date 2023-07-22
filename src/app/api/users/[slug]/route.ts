@@ -54,7 +54,7 @@ export async function DELETE(
         email: slug
     }
   })
-  return new Response(JSON.stringify({ user }, null, 2));
+  return new Response(JSON.stringify({ user }));
 }   catch (error: any) {
   return new Response(JSON.stringify({ error: error.message }));
   }

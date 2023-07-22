@@ -4,10 +4,15 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Matariki from "@/components/Matariki"
+import { useRouter } from "next/navigation"
+
 export default function Splash() {
   const { data: session, status } = useSession()
   const [showMatariki, setShowMatariki] = useState(false)
+  
+  const router = useRouter()
 
+  // loading animation
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowMatariki(true);
@@ -16,6 +21,24 @@ export default function Splash() {
     return () => clearTimeout(timeout)
   }, [])
 
+  // redirects to home page if authenticated, signin page if unauthenticated
+  useEffect(() => {
+    console.log(session)
+    console.log(status)
+    const redirectTimeout = setTimeout(() => {
+      if ({authenticated: true}) {
+        router.push("/home")
+       }
+    
+      if ({authenticated: false}) { 
+        router.push("/signin")
+      }
+    }, 10000)
+
+    return () => clearTimeout(redirectTimeout)
+  }, [router, session, status])
+
+  
   return (
     <>
       <div
@@ -25,8 +48,8 @@ export default function Splash() {
           src="/images/logo.svg"
           alt="Logo"
           width={250}
-          height={250}
-          className=""
+          height={166}
+          priority={true}
         />
       </div>
       {showMatariki && (

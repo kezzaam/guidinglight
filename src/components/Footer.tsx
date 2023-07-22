@@ -11,8 +11,8 @@ export default function Footer() {
     return (
         <div className="w-screen left-0 fixed bottom-0 flex flex-row justify-between px-4 py-4 lg:w-[40%] lg:flex-col bg-transparent">
             <div className="w-[20%]">
-                <Link href="#">
-                    <div className={`absolute bottom-0 lg:bottom-96 rounded-t-2xl lg:rounded-tl-sm lg:rounded-r-2xl lg:left-0 lg:pl-6 p-4 ${pathname == "#" ? "current" : ""}`}>
+                <Link href="/dashboard">
+                    <div className={`absolute bottom-0 lg:bottom-96 rounded-t-2xl lg:rounded-tl-sm lg:rounded-r-2xl lg:left-0 lg:pl-6 p-4 ${pathname == "/dashboard" ? "current" : ""}`}>
                         <Image
                             src="/icons/stargears.svg"
                             alt="Settings"

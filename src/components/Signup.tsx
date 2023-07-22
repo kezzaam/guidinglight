@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,23 +9,43 @@ import {
   faGithub,
   faGoogle,
 } from '@fortawesome/free-brands-svg-icons'
-import axios from 'axios'
+import { signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import SignoutButton from './SignoutButton'
 
 // Component for user sign-up functionality.
 
 export default function Signup(): JSX.Element {
+  const { data: session, status } = useSession()
+  const router = useRouter()
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   })
 
-  // Handle create account form submission
-  const handleCreateAccount = async (e: { preventDefault: () => void }) => {
+  const handleCreateAccount = async (e) => {
     e.preventDefault()
-    axios.post('/api/users', data)
-      .then(() => alert('Account created successfully!'))
-      .catch((err) => alert(err))
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+  
+    // Check if account creation was successful
+    if (response.ok) {
+      // Account created successfully, now sign in the user
+      await signIn('credentials', {
+        ...data,
+        redirect: true, // Redirect the user after signing in
+        callbackUrl: '/signup/welcome',
+      })
+    } else {
+      // Handle account creation failure, e.g., display an error message
+      console.error('Account creation failed.')
+    }
   }
 
   // Handle Google sign-up
@@ -125,6 +146,7 @@ export default function Signup(): JSX.Element {
         <div>
           <h2 className="mt-2 text-left text-lg text-intensewhite">
             Already have an account? <Link href="/signin">Sign in</Link>
+            <SignoutButton />
           </h2>
         </div>
       </form>

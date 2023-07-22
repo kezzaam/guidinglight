@@ -1,4 +1,4 @@
-import Provider from './api/auth/Provider'
+import Provider from '../context/Provider'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Staatliches } from 'next/font/google'
@@ -23,11 +23,11 @@ export default function RootLayout({
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
       <body>
         <div className="w-screen flex flex-col items-center justify-center space-y-4">
-          <main className={`w-screen content ${staatliches.className} py-4`}>
-            <Provider>
+          <Provider>
+            <main className={`w-screen content ${staatliches.className} py-4`}>
               {children}
-            </Provider>
-          </main>
+            </main>
+          </Provider>
         </div>
       </body>
     </html>

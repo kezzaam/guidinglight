@@ -62,8 +62,8 @@ export default function Discoveries() {
   }, [discoveries])
 
   return (
-    <section className="w-full p-4 mt-4">
-      <div className="sticky top-0 lg:flex lg:flex-row lg:space-x-2 lg:justify-center">
+    <section className="w-full pt-32 lg:pt-10">
+      <div className="sticky top-10 lg:flex lg:flex-row lg:space-x-2 lg:justify-center z-10">
         <Search onSearch={handleSearch} />
         <Filter onFilter={handleFilter} />
       </div>

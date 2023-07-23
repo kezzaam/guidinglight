@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client"
 
-import { useState } from 'react'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
@@ -43,10 +42,10 @@ export default function Signin() {
   return (
     <>
       <div>
-        <h2 className="mt-6 text-center text-3xl lg:pt-20">Sign in</h2>
+        <h2 className="mt-6 text-center text-3xl pt-24">Sign in</h2>
       </div>
 
-      <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:justify-center" onSubmit={handleSignIn}>
+      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:justify-center lg:max-w-[50%]" onSubmit={handleSignIn}>
 
         <div className="rounded-md shadow-sm -space-y-px">
           <div>

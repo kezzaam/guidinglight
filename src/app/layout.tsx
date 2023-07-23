@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="min-w-screen flex flex-col items-center text-center">
       <body>
-        <div className="w-screen flex flex-col items-center justify-center space-y-4">
+        <div className="w-screen h-screen flex flex-col items-center justify-center top">
           <Provider>
             <UserProvider>
             <HotToast />
-            <main className={`w-screen content ${staatliches.className} py-4`}>
+            <main className={`w-screen content ${staatliches.className}`}>
               {children}
             </main>
             </UserProvider>

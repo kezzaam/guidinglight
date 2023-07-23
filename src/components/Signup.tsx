@@ -52,11 +52,11 @@ export default function Signup(): JSX.Element {
   return (
     <>
       <div>
-        <h2 className="mt-6 text-3xl text-center">Create account</h2>
+        <h2 className="mt-6 text-3xl text-center pt-24">Create account</h2>
       </div>
 
 
-      <form className="max-w-xl text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto" onSubmit={handleCreateAccount}>
+      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:max-w-[50%]" onSubmit={handleCreateAccount}>
 
         <div>
           <label className="text-lg" htmlFor="name">

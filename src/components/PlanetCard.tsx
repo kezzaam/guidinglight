@@ -1,4 +1,7 @@
+"use client"
+
 import Image from 'next/image'
+import { useState } from 'react'
 
 export interface Planet {
     id: string,
@@ -17,26 +20,45 @@ type PlanetCardProps = {
 }
 
 export default function PlanetCard({ planet }: PlanetCardProps) {
-    // const getRandomDelay = () => Math.random() * 10; // Generate a random delay value between 0 and 5
-
+    const [isFlipped, setIsFlipped] = useState(false)
+  
+    const handleCardClick = () => {
+      setIsFlipped(!isFlipped)
+    }
+  
     return (
-        <>
-            <a href="#" className="bg-cetaceanblue border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace ">
-                <div className="flex flex-col items-center pt-8">
-                <Image src="/images/moon-01.svg" alt="Moon" width={200} height={200} />
-                </div>
-                <div className="flex flex-col justify-between p-4 leading-normal">
-                    <h2 className="mb-2 text-2xl font-bold">{planet.name}</h2>
-                    <div className="mb-3 font-normal text-intensewhite">
-                        <p>{planet.sym}</p>
-                        <h4 className="text-3xl">{planet.maori_name}</h4>
-                        <p>{planet.description}</p>
-                    </div>
-                </div>
-            </a>
-        </>
+      <div
+        className={`card ${isFlipped ? 'flipped' : ''}`}
+        onClick={handleCardClick}
+      >
+        <div className="card-inner">
+          <div className="card-front bg-cetaceanblue border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace">
+            <div className="flex flex-col items-center pt-8">
+              <Image
+                src={`/images/${encodeURIComponent(planet.img)}`}
+                alt={planet.name}
+                width={200}
+                height={200}
+              />
+            </div>
+            <div className="flex flex-col justify-between p-4 leading-normal">
+              <h2 className="mb-2 text-2xl font-bold">{planet.name}</h2>
+              <div className="mb-3 text-intensewhite">
+                <p>{planet.sym}</p>
+                <h4 className="text-3xl">{planet.maori_name}</h4>
+              </div>
+            </div>
+          </div>
+          <div className="card-back bg-fuzzywuzzy border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace">
+            <div className="flex flex-col justify-between p-6 leading-normal">
+              <h3 className="text-4xl mb-4 hover:text-fuzzy-wuzzy text-fawn">{planet.sym}</h3>
+              <p>{planet.description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     )
-}
+  }
 
 
 

@@ -17,33 +17,36 @@ export default function Welcome() {
     const [userName, setUserName] = useState('')
 
     useEffect(() => {
-      const getName = async () => {
-        try {
-          const response = await axios.get(`/api/users/${encodeURIComponent(userEmail)}`)
-          const userNameFromApi = response.data.user.name
-          setUserName(userNameFromApi)
-        } catch (error) {
-          console.error('Error fetching user data:', error)
+        const getName = async () => {
+            try {
+                const response = await axios.get(`/api/users/${encodeURIComponent(userEmail)}`)
+                const userNameFromApi = response.data.user.name
+                setUserName(userNameFromApi)
+            } catch (error) {
+                console.error('Error fetching user data:', error)
+            }
         }
-      }
-  
-      getName()
+
+        getName()
     }, [userEmail])
 
     return (
 
         <div className="w-screen">
             <div>
-                {/* Replace with user name */}
-                <h2 className="mt-4 text-3xl text-center">Welcome, {userName}!</h2>
+                <h2 className="text-3xl lg:text-4xl text-center pt-32">Welcome, {userName}!</h2>
 
-                <div className="my-4 mx-4 p-8 flex flex-col text-left">
-                    <h3 className="text-2xl text-intensewhite">Discover more about</h3>
-                    {/* Replace with user goal */}
-                    <h5 className="text-2xl">Aotearoa's night sky</h5>
-                    <h4 className="leading-7 my-4 text-lg">
+                <div className="my-4 mx-4 p-8 flex flex-col text-left lg:text-center lg:max-w-[50%] lg:mx-auto">
+                    <div>
+                        <h3 className="text-2xl lg:text-3xl text-intensewhite">Discover more about</h3>
+                        <h5 className="text-2xl lg:text-3xl">Aotearoa's night sky</h5>
+                    </div>
+                    
+                    <h4 className="leading-8 my-4 text-lg lg:text-2xl">
                         Build your knowledge of Māori astronomy, make discoveries and explore the guiding lights visible in your night sky.
                     </h4>
+
+<div className="space-y-8 mb-10">
                     <div className="my-4 flex flex-row items-center space-x-6">
                         <Image
                             src="/icons/mooncalendar.svg"
@@ -84,8 +87,9 @@ export default function Welcome() {
                         />
                         <h6>Customisation options</h6>
                     </div>
+                    </div>
                     <Link href="/home">
-                    <Button>Got it, thanks!</Button>
+                        <Button>Got it, thanks!</Button>
                     </Link>
                 </div>
 

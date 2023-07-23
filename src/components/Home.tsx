@@ -6,6 +6,7 @@ import CalendarRow from '@/components/CalendarRow'
 import Maramataka from '@/components/Maramataka'
 
 export default function Home() {
+
   // Use state to manage the selected date
   const [selectedDate, setSelectedDate] = useState(new Date())
 
@@ -15,7 +16,7 @@ export default function Home() {
   }
 
   return (
-    <div className="px-5 lg:pt-20">
+    <div className="px-5 pt-32">
       <Month selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <Maramataka selectedDate={selectedDate} onDateSelect={handleDateSelect}/>

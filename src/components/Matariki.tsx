@@ -1,8 +1,8 @@
 export default function Matariki() {
-    const getRandomDelay = () => Math.random() * 10; // Generate a random delay value between 0 and 5
+    const getRandomDelay = () => Math.random() * 10 // Generate a random delay value between 0 and 5
 
     return (
-        <div>
+        <>
             <svg
                 version="1.1"
                 id="Layer_1"
@@ -91,6 +91,6 @@ export default function Matariki() {
                     />
                 </g>
             </svg>
-        </div>
-    );
+        </>
+    )
 }

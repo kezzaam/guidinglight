@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
 
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         // console.log("incoming credentials", credentials)
         // check if email and password are valid
         if (!credentials.email || !credentials.password) {

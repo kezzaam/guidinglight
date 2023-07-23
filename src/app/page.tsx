@@ -26,11 +26,11 @@ export default function Splash() {
     console.log(session)
     console.log(status)
     const redirectTimeout = setTimeout(() => {
-      if ({authenticated: true}) {
+      if (status === "authenticated") {
         router.push("/home")
        }
     
-      if ({authenticated: false}) { 
+      if (status === "unauthenticated") { 
         router.push("/signin")
       }
     }, 10000)

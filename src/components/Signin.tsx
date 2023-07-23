@@ -12,19 +12,17 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useUserContext } from '@/context/UserContext'
 
 export default function Signin() {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  })
+  const { userData, setUserData } = useUserContext()
 
   const router = useRouter()
 
   const handleSignIn = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     signIn('credentials', {
-      ...data,
+      ...userData,
       // this has to be false to stop redirect on error
       redirect: false,
     })
@@ -38,6 +36,8 @@ export default function Signin() {
         router.push('/welcome')
       }
     })
+
+    console.log(userData)
   }
 
   return (
@@ -60,8 +60,8 @@ export default function Signin() {
               required
               className="appearance-none rounded-none relative block w-full p-3 border border-bluegrey rounded-t-md focus:outline-bluegrey focus:ring-none focus:border-bluegrey focus:z-10 sm:text-sm chivo"
               placeholder="Email address"
-              value={data.email}
-              onChange={(e) => setData({ ...data, email: e.target.value })}
+              value={userData.email}
+              onChange={(e) => setUserData({ ...userData, email: e.target.value })}
             />
           </div>
 
@@ -73,8 +73,8 @@ export default function Signin() {
               required
               className="appearance-none rounded-none relative block w-full p-3 border border-bluegrey rounded-b-md focus:outline-bluegrey focus:ring-none focus:border-bluegrey focus:z-10 sm:text-sm chivo"
               placeholder="Password"
-              value={data.password}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
+              value={userData.password}
+              onChange={(e) => setUserData({ ...userData, password: e.target.value })}
             />
           </div>
         </div>

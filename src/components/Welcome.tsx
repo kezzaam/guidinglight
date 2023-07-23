@@ -5,23 +5,30 @@ import { useSession } from 'next-auth/react'
 import Button from './Button'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useUserContext } from '@/context/UserContext'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 export default function Welcome() {
-    // Get the user's name from the session
-    // There is a bug here, this should work but it doesn't
-    // returning undefined
-    const { data: session, status } = useSession();
+    const { userData } = useUserContext()
+    const userEmail = userData.email
+    console.log(userEmail)
 
-    // Check if the session is loading
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
+    const [userName, setUserName] = useState('')
 
-    // Check if the session data is available
-    const userName = session?.user?.name || "Guest";
-
-    console.log(session?.user)
-
+    useEffect(() => {
+      const getName = async () => {
+        try {
+          const response = await axios.get(`/api/users/${encodeURIComponent(userEmail)}`)
+          const userNameFromApi = response.data.user.name
+          setUserName(userNameFromApi)
+        } catch (error) {
+          console.error('Error fetching user data:', error)
+        }
+      }
+  
+      getName()
+    }, [userEmail])
 
     return (
 

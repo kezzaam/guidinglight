@@ -12,7 +12,7 @@
 ###### [4. Timeframe](#timeframe)
 ###### [5. User flow](#user-flow)
 ###### [5. Data structure](#data-structure)
-###### [5. Useage](#usage)
+###### [5. Usage](#usage)
 
 #### [Background]:
 
@@ -116,15 +116,15 @@ flowchart TB
     F --> |Yes| H[Onboarding]-->D
     F --> |No| G(Alert)-->B
     D --> I(Navigation)
-    I --> J(Discoveries)
-    I --> K(Settings)
-    I --> L(Modes)
-    I --> M(Account) -->N(Logout) -->O[End]
+    I --> J(Dashboard)-->N(Logout) -->O[End]
+    I --> K(Explorer)
+    I --> L(Discoveries)
+    I --> M(Maramataka) 
 ```
 #### [Data Structure]:
 
 ER diagram
-- The user needs to be able to make discoveries and mark favourites.
+The user needs to be able to make discoveries and mark favourites.
 
 ``` mermaid
 erDiagram

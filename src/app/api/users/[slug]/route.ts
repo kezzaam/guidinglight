@@ -10,7 +10,7 @@ export async function GET(
     const slug = params.slug 
 
     const user = await prisma.user.findUnique({
-      // set to email but can use different fields to find user by ie id, name - just change email field
+      // set to email but can use different fields to find user by ie id, name - just change id field
       where: {
         email: slug,
       },
@@ -27,10 +27,10 @@ export async function PUT(
   try {
     const slug = params.slug 
     const data = await request.json();
-    // find the user by email
+    // find the user by id
     const user = await prisma.user.update({ 
       where: { 
-      email: slug 
+      id: slug 
     }, 
     // data to update
     data 
@@ -48,10 +48,10 @@ export async function DELETE(
   ) {
   try {
     const slug = params.slug
-    // find the user by email
+    // find the user by id
     const user = await prisma.user.delete({
       where: {
-        email: slug
+        id: slug
     }
   })
   return new Response(JSON.stringify({ user }));

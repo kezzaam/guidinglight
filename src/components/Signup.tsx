@@ -56,7 +56,7 @@ export default function Signup(): JSX.Element {
       </div>
 
 
-      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:max-w-[50%]" onSubmit={handleCreateAccount}>
+      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto sm:max-w-sm md:max-w-md lg:max-w-lg" onSubmit={handleCreateAccount}>
 
         <div>
           <label className="text-lg" htmlFor="name">

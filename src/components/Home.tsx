@@ -16,7 +16,7 @@ export default function Home() {
   }
 
   return (
-    <div className="px-5 pt-32">
+    <div className="px-5 pt-28">
       <Month selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <CalendarRow selectedDate={selectedDate} onDateSelect={handleDateSelect} />
       <Maramataka selectedDate={selectedDate} onDateSelect={handleDateSelect}/>

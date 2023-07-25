@@ -48,7 +48,7 @@ model User {
   image     String?
   accounts      Account[]
   sessions      Session[]
-  favourites    Favourites[]
+  favourites    String[]
   password  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,7 +85,6 @@ model Star {
   description          String?
   isNamed              Boolean      @default(false)
   category             String?      @default("star")
-  favourites           Favourites[]
 }
 
 model Planet {
@@ -98,7 +97,6 @@ model Planet {
   maori_name String?
   description String?
   category String? @default("planet")
-  favourites Favourites[]
 }
 
 model Constellation {
@@ -112,7 +110,6 @@ model Constellation {
   maori_name   String?
   description  String?
   category     String?   @default("constellation")
-  favourites   Favourites[]
 }
 
 model Asterism {
@@ -125,21 +122,18 @@ model Asterism {
   maori_name String?
   description String?
   category String @default("asterism")
-  favourites Favourites[]
 }
 
-model Favourites {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String @db.ObjectId
-  starId   String @db.ObjectId
-  planetId String @db.ObjectId
-  constellationId String @db.ObjectId
-  asterismId String @db.ObjectId
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  star     Star   @relation(fields: [starId], references: [id], onDelete: Cascade)
-  planet   Planet @relation(fields: [planetId], references: [id], onDelete: Cascade)
-  constellation Constellation @relation(fields: [constellationId], references: [id], onDelete: Cascade)
-  asterism Asterism @relation(fields: [asterismId], references: [id], onDelete: Cascade)
-}
+// model Favourite {
+//   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//   user         User     @relation(fields: [userId], references: [id])
+//   userId       String   @map("_user") @db.ObjectId
+//   favouritedId String
+//   createdAt    DateTime @default(now())
+
+//   @@map("favourites")
+// }
+
+
 
 

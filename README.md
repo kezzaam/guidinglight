@@ -11,8 +11,10 @@
 ###### [3. Technology](#technology)
 ###### [4. Timeframe](#timeframe)
 ###### [5. User flow](#user-flow)
-###### [5. Data structure](#data-structure)
-###### [5. Usage](#usage)
+###### [6. Data structure](#data-structure)
+###### [7. Usage](#usage)
+###### [7. Version Control](#version-control)
+###### [8. Acknowledgements](#acknowledgements)
 
 #### [Background]:
 
@@ -123,7 +125,7 @@ flowchart TB
 ```
 #### [Data Structure]:
 
-ER diagram
+#### ER diagram
 The user needs to be able to make discoveries and mark favourites.
 
 ``` mermaid
@@ -211,22 +213,44 @@ erDiagram
 #### [Usage]:
 
 1. Clone this repo
-2. Install dependencies (npm install)
+2. Install dependencies 
+
+```
+npm install
+```
+
 3. Set up MongoDB replica set for use with Prisma ORM: https://github.com/prisma/prisma-examples/blob/latest/databases/mongodb/README.md
 4. Create a .env file with:
     - MongoDB replica set 
-        DATABASE_URL="mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
+        - DATABASE_URL="mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
 
     - NextAuth
-        NEXTAUTH_URL=http://localhost:3000
-        Generate your own keys for:
-            NEXTAUTH_SECRET 
-            GOOGLE_CLIENT_ID
-            GOOGLE_CLIENT_SECRET
-            GITHUB_CLIENT_ID
-            GITHUB_CLIENT_SECRET
+        - NEXTAUTH_URL=http://localhost:3000
+        - Generate your own keys for:
+            - NEXTAUTH_SECRET 
+            - GOOGLE_CLIENT_ID
+            - GOOGLE_CLIENT_SECRET
+            - GITHUB_CLIENT_ID
+            - GITHUB_CLIENT_SECRET
 
 5. Start the db instance with Docker desktop
 6. npm run dev
 7. Write astronomical data using postman to make a GET request to http://localhost:3000/api/data/save-to-db
+    - (Note that the maori astronomical data is not present in the json files)
+
+#### [Version Control]:
+
+Git branches for version control:
+    - main: stable version
+    - release: version ready for testing
+    - feature: additional feature being developed
+
+Semantic versioning ie vX.Y.Z
+
+#### [Acknowledgements]:
+    - The data comes from astronomical json files found at d3-celestial https://github.com/ofrohn/d3-celestial
+    - Maramataka descriptions from https://github.com/JackTabronEXE/maramataka-app
+    - BV-index star colour conversion calculations adapted from https://codepen.io/blaketarter/pen/EjxRMX
+    - twinkling star animation adapted from https://codepen.io/SushantPradhan/pen/KzWjdz
+
 

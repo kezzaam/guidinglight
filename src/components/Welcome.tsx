@@ -11,86 +11,72 @@ import { useEffect, useState } from 'react'
 
 export default function Welcome() {
     const { userData } = useUserContext()
-    const userEmail = userData.email
-    console.log(userEmail)
+    const { name } = userData
 
-    const [userName, setUserName] = useState('')
+    // Carousel state and configuration
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const carouselInterval = 3000 // Time in milliseconds to show each item
+    const carouselData = [
+        {
+            title: "Maramataka - Māori lunar calendar",
+            imgSrc: "/icons/mooncalendar.svg",
+        },
+        {
+            title: "Star, constellation & planet reference",
+            imgSrc: "/icons/bookmark.svg",
+        },
+        {
+            title: "Explore the night sky",
+            imgSrc: "/icons/maoristar.svg",
+        },
+        {
+            title: "Customisation options",
+            imgSrc: "/icons/stargears.svg",
+        },
+    ]
 
     useEffect(() => {
-        const getName = async () => {
-            try {
-                const response = await axios.get(`/api/users/${encodeURIComponent(userEmail)}`)
-                const userNameFromApi = response.data.user.name
-                setUserName(userNameFromApi)
-            } catch (error) {
-                console.error('Error fetching user data:', error)
-            }
-        }
+        // Autoplay carousel logic
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselData.length)
+        }, carouselInterval)
 
-        getName()
-    }, [userEmail])
+        // Clear the interval when component unmounts
+        return () => clearInterval(interval)
+    }, [carouselData.length])
 
     return (
-
         <div className="w-screen">
             <div>
-                <h2 className="text-3xl lg:text-4xl text-center pt-32">Welcome, {userName}!</h2>
+                <h2 className="text-3xl  lg:text-4xl text-center pt-32">Welcome, {name}!</h2>
 
-                <div className="my-4 mx-4 p-8 flex flex-col text-left lg:text-center lg:max-w-[50%] lg:mx-auto">
+                <div className="my-4 mx-4 p-8 flex flex-col text-left md:mx-auto lg:text-center lg:mx-auto md:max-w-lg lg:max-w-2xl lg:items-center">
                     <div>
-                        <h3 className="text-2xl lg:text-3xl text-intensewhite">Discover more about</h3>
-                        <h5 className="text-2xl lg:text-3xl">Aotearoa's night sky</h5>
-                    </div>
-                    
-                    <h4 className="leading-8 my-4 text-lg lg:text-2xl">
-                        Build your knowledge of Māori astronomy, make discoveries and explore the guiding lights visible in your night sky.
-                    </h4>
+                        <div>
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl text-intensewhite">Discover more about</h3>
+                            <h5 className="text-2xl md:text-3xl lg:text-4xl">Aotearoa's night sky</h5>
+                        </div>
 
-<div className="space-y-8 mb-10">
-                    <div className="my-4 flex flex-row items-center space-x-6">
-                        <Image
-                            src="/icons/mooncalendar.svg"
-                            alt="Settings"
-                            width={60}
-                            height={60}
-                            className="bg-bluegrey rounded-lg p-2"
-                        />
-                        <h6>Maramataka - Māori  lunar calendar</h6>
+                        <h4 className="leading-8 my-4 text-lg lg:text-2xl">
+                            Build your knowledge of Māori astronomy, make discoveries and explore the guiding lights visible in your night sky.
+                        </h4>
                     </div>
-                    <div className="my-4 flex flex-row items-center space-x-6">
-                        <Image
-                            src="/icons/bookmark.svg"
-                            alt="Settings"
-                            width={60}
-                            height={60}
-                            className="bg-bluegrey rounded-lg p-2"
-                        />
-                        <h6>Star, constellation & planet reference</h6>
+
+                    <div className="space-y-8 mb-10">
+                        <div className="my-4 flex flex-row items-center space-x-6 transition duration-100 ease-in">
+                            <Image
+                                src={carouselData[currentIndex].imgSrc}
+                                alt={carouselData[currentIndex].title}
+                                width={60}
+                                height={60}
+                                className="bg-bluegrey rounded-lg p-2"
+                            />
+                            <h6>{carouselData[currentIndex].title}</h6>
+                        </div>
                     </div>
-                    <div className="my-4 flex flex-row items-center space-x-6">
-                        <Image
-                            src="/icons/maoristar.svg"
-                            alt="Settings"
-                            width={60}
-                            height={60}
-                            className="bg-bluegrey rounded-lg p-2"
-                        />
-                        <h6>Explore the night sky</h6>
-                    </div>
-                    <div className="mt-4 mb-10 flex flex-row items-center space-x-6">
-                        <Image
-                            src="/icons/stargears.svg"
-                            alt="Settings"
-                            width={60}
-                            height={60}
-                            className="bg-bluegrey rounded-lg p-2"
-                        />
-                        <h6>Customisation options</h6>
-                    </div>
-                    </div>
-                    <Link href="/home">
-                        <Button>Got it, thanks!</Button>
-                    </Link>
+                    <Link href="/home" >
+                    <Button>Got it, thanks!</Button>
+                </Link>
                 </div>
 
             </div>

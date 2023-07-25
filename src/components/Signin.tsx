@@ -45,7 +45,7 @@ export default function Signin() {
         <h2 className="mt-6 text-center text-3xl pt-24">Sign in</h2>
       </div>
 
-      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:justify-center lg:max-w-[50%]" onSubmit={handleSignIn}>
+      <form className="text-bluegrey text-left text-sm p-8 flex flex-col space-y-4 md:mx-auto lg:justify-center sm:max-w-sm md:max-w-md lg:max-w-lg" onSubmit={handleSignIn}>
 
         <div className="rounded-md shadow-sm -space-y-px">
           <div>

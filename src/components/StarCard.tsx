@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Star from './Star'
+import FavouriteButton from './FavouriteButton'
 
 export interface Star {
   id: string
@@ -18,6 +19,7 @@ export interface Star {
   description: string
   isNamed: boolean
   category: string
+  isFavourite: boolean
 }
 
 type StarCardProps = {
@@ -44,6 +46,14 @@ export default function StarCard({ star }: StarCardProps) {
             <h2 className="text-2xl">
               {star.name ? star.name : star.designation}
             </h2>
+            <h3 className="text-lg">{star.maori_name ? star.maori_name : ''}</h3>
+              <p className="text-sm">{star.constellation ? `Constellation: ${star.constellation}` : ''}</p>
+              <p className="text-sm">Magnitude: {star.magnitude}</p>
+              <p className="text-sm">BV index: {star.bv_index}</p>
+
+              <FavouriteButton
+                  favouritedId={star.id}
+                />
 
           </div>
         </div>
@@ -52,12 +62,7 @@ export default function StarCard({ star }: StarCardProps) {
             <h3 className="text-2xl mb-4 hover:text-fuzzy-wuzzy text-fawn">
               {star.name ? star.name : star.designation}
             </h3>
-            <div className="text-intensewhite mb-3">
-              <p className="text-sm">{star.maori_name ? `Maori Name: ${star.maori_name}` : ''}</p>
-              <p className="text-sm">{star.constellation ? `Constellation: ${star.constellation}` : ''}</p>
-            </div>
-            <p className="text-sm">Magnitude: {star.magnitude}</p>
-            <p className="text-sm">BV index: {star.bv_index}</p>
+            <p>{star.description}</p>
           </div>
         </div>
       </div>

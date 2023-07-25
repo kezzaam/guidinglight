@@ -18,6 +18,13 @@ export default function Filter({ onFilter }: { onFilter: (option: string) => voi
       </button>
 
       <button
+        className={filterOption === 'maori' ? 'py-2 px-4 rounded-lg text-white selected' : 'py-2 px-4 rounded-lg'}
+        onClick={() => handleFilter('maori')}
+      >
+        Maori
+      </button>
+
+      <button
         className={filterOption === 'named' ? 'py-2 px-4 rounded-lg text-white selected' : 'py-2 px-4 rounded-lg'}
         onClick={() => handleFilter('named')}
       >

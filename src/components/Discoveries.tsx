@@ -23,8 +23,7 @@ export default function Discoveries() {
         setFilteredData(discoveries)
         break
       case 'named':
-        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && (discovery as Star).isNamed))
-        break
+        setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && (discovery as Star).isNamed || discovery.category === 'star' && (discovery as Star).maori_name !== null || ''));        break
       case 'unnamed':
         setFilteredData(discoveries.filter((discovery) => discovery.category === 'star' && !(discovery as Star).isNamed))
         break
@@ -37,6 +36,8 @@ export default function Discoveries() {
       case 'planets':
         setFilteredData(discoveries.filter((discovery) => discovery.category === 'planet'))
         break
+      case 'maori':
+        setFilteredData(discoveries.filter((discovery) => discovery.maori_name !== '' && discovery.maori_name !== null));          break;
       default:
         setFilteredData(discoveries)
         break
@@ -47,6 +48,7 @@ export default function Discoveries() {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/discoveries')
+        response.data.sort((a: DiscoveryItem, b: DiscoveryItem) => a.name.localeCompare(b.name))
         setDiscoveries(response.data)
       } catch (error) {
         console.error('Error fetching data:', error)

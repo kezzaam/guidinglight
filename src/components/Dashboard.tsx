@@ -1,42 +1,18 @@
 "use client"
 
-import { signOut, useSession } from "next-auth/react"
-import { useState, useEffect } from "react"
+import { signOut } from "next-auth/react"
+import { useState } from "react"
 import { useUserContext } from "@/context/UserContext"
 import Toggle from "./Toggle"
 import axios from "axios"
-
+import { toast } from "react-hot-toast"
 
 export default function Dashboard() {
     const { userData } = useUserContext()
-    // use session hook - client side session ret
-    const { data: session, status } = useSession()
+    // use session hook - client side session retrieval
     const userEmail = userData.email
-    console.log(userEmail)
-
-    const [userName, setUserName] = useState('')
-
-    useEffect(() => {
-        const getName = async () => {
-            try {
-                const response = await axios.get(`/api/users/${encodeURIComponent(userEmail)}`);
-                // Check if the response data and user object exist
-                if (response.data && response.data.user && response.data.user.name) {
-                    const userNameDB = response.data.user.name;
-                    setUserName(userNameDB);
-                } else {
-                    // If the user data is not available, set userName to null
-                    setUserName('');
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                // If there's an error fetching data, set userName to null
-                setUserName('');
-            }
-        };
-
-        getName();
-    }, [userEmail]);
+    const userName = userData.name
+    const userId = userData.id
 
     const [toggles, setToggles] = useState<{
         stars: boolean
@@ -57,6 +33,19 @@ export default function Dashboard() {
             [toggleName]: !prevToggles[toggleName],
         }))
     }
+    const handleDeleteAccount = async () => {
+        try {
+          if (window.confirm("Are you sure you want to delete your account?")) {
+            // Call the delete account API or function here
+            await axios.delete(`/api/users/${userId}`)
+            await signOut()
+            toast.success("Account deleted successfully")
+            }
+        } catch (error) {
+          console.error('Error deleting account:', error);
+        }
+      }
+
     return (
         <>
             <div>
@@ -67,12 +56,15 @@ export default function Dashboard() {
                 <h3 className="text-xl font-bold ">Account</h3>
                 {/* Conditionally render based on whether userName exists or not */}
                 {userName ? (
-                    <><h2 className="mt-4 text-3xl">{userName}</h2><p>{userEmail}</p></>
+                    <><h2 className="mt-4 text-3xl">{userName}</h2><p>{userId}</p><p>{userEmail}</p></>
                 ) : (
                     <p>Not signed in</p>
                 )}
-                <a className="text-xl tracking-wide underline" onClick={() => signOut()}>Sign Out</a>
-
+                {userName ? ( // If there is a userName, render "Sign Out" link
+                    <a className="text-xl tracking-wide underline" onClick={() => signOut()}>Sign Out</a>
+                ) : ( // If there is no userName, render "Sign In" link
+                    <a className="text-xl tracking-wide underline" href="/signin">Sign In</a>
+                )}
                 <div className="separator"></div>
 
                 <div className="py-4">
@@ -109,24 +101,18 @@ export default function Dashboard() {
                     <div className="separator"></div>
                     <div className="py-4 text-sm underline cursor-pointer flex flex-col space-y-4 chivo">
                         {/* Data Privacy */}
-                            <a href="/data-privacy" className="underline">Data privacy</a>
+                        <a href="/data-privacy" className="underline">Data privacy</a>
                         {/* Support */}
-                            <a href="/support" className="underline">Support</a>
+                        <a href="/support" className="underline">Support</a>
                         {/* Delete Account */}
-                            <a
-                                onClick={() => {
-                                    if (window.confirm("Are you sure you want to delete your account?")) {
-                                        // Call the delete account API or function here
-                                        // For example, you can use the signOut function from next-auth
-                                        signOut();
-                                    }
-                                }}
-                                className="underline cursor-pointer"
-                            >
-                                Delete account
-                            </a>
-                        </div>
+                        <a
+                            onClick={handleDeleteAccount}
+                            className="underline cursor-pointer"
+                        >
+                            Delete account
+                        </a>
                     </div>
+                </div>
             </form>
 
         </>

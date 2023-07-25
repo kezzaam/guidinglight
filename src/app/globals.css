@@ -44,9 +44,9 @@
   --darkpurple: #38203E;
 }
 
-* {
+/* * {
   transition: all 0.3s ease;
-}
+} */
 
 html {
   background-image: url(/images/nightskydark.jpg);
@@ -340,6 +340,7 @@ a:hover {
   transform-style: preserve-3d;
   cursor: pointer;
   perspective: 1000px;
+  min-height: 400px;
 }
 
 .card-inner {

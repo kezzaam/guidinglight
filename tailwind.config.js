@@ -21,6 +21,7 @@ module.exports = {
         fawn: '#EFA970',
         emerald: '#34957A',
         vegasgold: '#C3B861',
+        darkcornflowerblue: '#26408B',
       },
     },
   },

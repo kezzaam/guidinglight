@@ -1,16 +1,16 @@
 import { prisma } from '../../../../../../prisma/prisma'
 
-// get star by star_id, then can find longer id string to use for PUT and DELETE
+// get star by id
 export async function GET(
     request: Request,
     { params }: { params: { id: string } }
   ) {
-    const id = Number(params.id) // convert to number
+    const id = params.id 
 
     const star = await prisma.star.findUnique({
-      // set to star_id but can use different fields to find star
+      // look for matching id
       where: {
-        star_id: id,
+        id: id,
       },
     })
 

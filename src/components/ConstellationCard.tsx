@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ConstellationMap from './ConstellationMap'
+import FavouriteButton from './FavouriteButton'
 
 export interface Constellation {
   id: string
@@ -12,6 +13,7 @@ export interface Constellation {
   maori_name: string
   description: string
   category: string
+  isFavourite: boolean
 }
 
 type ConstellationCardProps = {
@@ -39,6 +41,11 @@ export default function ConstellationCard({
             <ConstellationMap
               constellationId={constellation.constellation_id}
             />
+
+            <FavouriteButton
+              favouritedId={constellation.id}
+            />
+
           </div>
         </div>
         <div className="card-back bg-fuzzywuzzy border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace">

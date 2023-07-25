@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AsterismMap from './AsterismMap'
+import FavouriteButton from './FavouriteButton'
 
 export interface Asterism {
   id: string
@@ -11,6 +12,7 @@ export interface Asterism {
   maori_name: string
   description: string
   category: string
+  isFavourite: boolean
 }
 
 type AsterismCardProps = {
@@ -34,6 +36,9 @@ export default function AsterismCard({ asterism }: AsterismCardProps) {
           <div className="p-4">
             <h2 className="text-2xl mt-4">{asterism.name}</h2>
             <AsterismMap asterism={asterism} />
+                <FavouriteButton
+                  favouritedId={asterism.id}
+                />
           </div>
         </div>
         <div className="card-back bg-fuzzywuzzy border border-outerspace rounded-lg shadow md:flex-row md:max-w-xl hover:bg-outerspace">

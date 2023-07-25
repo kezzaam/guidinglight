@@ -1,18 +1,18 @@
-"use client"
-
 import Image from 'next/image'
 import { useState } from 'react'
+import FavouriteButton from './FavouriteButton'
 
 export interface Planet {
-    id: string,
-    name: string,
-    img: string,
-    trajectory: boolean,
-    H:number,
-    sym: string,
-    maori_name: string,
-    description: string,
-    category: string,
+    id: string
+    name: string
+    img: string
+    trajectory: boolean
+    H:number
+    sym: string
+    maori_name: string
+    description: string
+    category: string
+    isFavourite: boolean
 }
 
 type PlanetCardProps = {
@@ -46,6 +46,11 @@ export default function PlanetCard({ planet }: PlanetCardProps) {
               <div className="mb-3 text-intensewhite">
                 <p>{planet.sym}</p>
                 <h4 className="text-3xl">{planet.maori_name}</h4>
+
+                <FavouriteButton
+                  favouritedId={planet.id}
+                />
+          
               </div>
             </div>
           </div>

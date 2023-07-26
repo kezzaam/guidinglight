@@ -130,8 +130,14 @@ The user needs to be able to make discoveries and mark favourites.
 
 ``` mermaid
 erDiagram
-    USER ||--o{ DISCOVERIES : discovers
-    USER ||--o{ FAVOURITES : marks
+    USER ||--o{ STAR : has
+    USER ||--o{ CONSTELLATION : has
+    USER ||--o{ ASTERISM : has
+    USER ||--o{ PLANET : has
+    USER ||--o{ STAR : has
+    USER ||--o{ CONSTELLATION : has
+    USER ||--o{ ASTERISM : has
+    USER ||--o{ PLANET : has
     USER {
         string id
         string name
@@ -141,30 +147,6 @@ erDiagram
         dateTime updatedAt
         array favourites
         array discoveries
-    }
-    DISCOVERIES ||--o{ STAR : has
-    DISCOVERIES ||--o{ CONSTELLATION : has
-    DISCOVERIES ||--o{ ASTERISM : has
-    DISCOVERIES ||--o{ PLANET : has
-    DISCOVERIES {
-        string id
-        string userId
-        array STAR[]
-        array CONSTELLATION[]
-        array ASTERISM[]
-        array PLANET[]
-    }
-    FAVOURITES ||--o{ STAR : has
-    FAVOURITES ||--o{ CONSTELLATION : has
-    FAVOURITES ||--o{ ASTERISM : has
-    FAVOURITES ||--o{ PLANET : has
-    FAVOURITES {
-        string id
-        string userId
-        array STAR[]
-        array CONSTELLATION[]
-        array ASTERISM[]
-        array PLANET[]
     }
     STAR {
         string id
@@ -219,7 +201,7 @@ erDiagram
 npm install
 ```
 
-3. Set up MongoDB replica set for use with Prisma ORM: https://github.com/prisma/prisma-examples/blob/latest/databases/mongodb/README.md
+3. If using local MongoDB, set up MongoDB replica set for use with Prisma ORM: https://github.com/prisma/prisma-examples/blob/latest/databases/mongodb/README.md
 4. Create a .env file with:
     - MongoDB replica set 
         - DATABASE_URL="mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
